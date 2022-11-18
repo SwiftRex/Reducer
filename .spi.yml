@@ -1,0 +1,13 @@
+version: 1
+builder:
+  configs:
+  - platform: watchos
+    scheme: NoTests
+  - platform: ios
+    scheme: NoTests
+  - platform: macos
+    scheme: Reducer
+  - platform: tvos
+    scheme: Reducer
+  - platform: linux
+    scheme: Reducer
