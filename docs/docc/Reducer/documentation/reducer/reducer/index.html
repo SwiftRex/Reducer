@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+    
+    <title>Reducer| Documentation</title>
+    
+    <link rel="icon"       href="../../../favicon.ico" />
+    <link rel="mask-icon"  href="../../../favicon.svg" color="#333333" />
+    <link rel='stylesheet' href='../../../css/site.css' />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.0.1/styles/default.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.0.1/highlight.min.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <div class="doc-topic">
+        <nav role="navigation" class="nav documentation-nav">
+  <div class="nav__wrapper">
+    <div class="nav__background"></div>
+    <div class="nav-content">
+      <div class="nav-title">
+        <span class="nav-title-link inactive">Documentation</span>
+      </div>
+      <div class="nav-menu">
+        <div class="nav-menu-tray">
+          <ul class="nav-menu-items hierarchy">
+            
+              <li class="nav-menu-item hierarchy-item">
+                
+                
+                  <a href="../index.html" class="item">Reducer</a>
+                
+              </li>
+            
+              <li class="nav-menu-item hierarchy-item">
+                
+                  <span class="current item">Reducer</span>
+                
+                
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+<main id="main" role="main" class="main">
+  <div class="topictitle">
+  <span class="eyebrow">Structure</span>
+  <h1 class="title">Reducer</h1>
+</div>
+  <div class="container content-grid">
+  <div class="description">
+    <div class="abstract content">
+      An entity that calculates the new state when given current state and an incoming action <code>(Action, inout State) -&gt; Void</code>.
+    </div>
+  </div>
+  
+  <!-- The sidebar once we have one: <div class="summary"></div> -->
+  
+  <div class="primary-content">
+    <section id='declaration' class='declaration'>
+  <h2>Declaration</h2>
+  <div class='declaration-group'>
+    <pre class='source indented'><code><span class='token-keyword'>struct</span> <span class='token-identifier'>Reducer</span>&lt;<span class='token-genericParameter'>ActionType</span>, <span class='token-genericParameter'>StateType</span>&gt;</code></pre>
+  </div>
+</section><div class='content'><h2 id='overview'>Overview</h2><p>An app triggers several actions over time, either coming from user input (button tap, scroll, pinch gesture), from sensors (CoreLocation, NFC, HealthKit), communication protocols (CoreBluetooth, networking, WebSocket), databases (CoreData, Realm), timers and many more. An app also starts with an initial state, right after its cold launch. For each action that arrives, the state can be modified, and this is exactly what a <code>Reducer</code> does: folds all actions that arrived since the app launch, plus the initial state, into the current state. One at the time. The shape of a <code>Reducer</code> could be represented as <code>(Action, State) -&gt; State</code>, or given the incoming action and the latest known state, calculate the new state. For the sake of performance, and keeping the same semantics, the SwiftRex <code>Reducer</code> is represented as <code>(Action, inout State) -&gt; Void</code>, avoiding unnecessary copies and allowing performance tuning for arrays or other big collections. A <code>Reducer</code> can focus in a small part, and be composed with other reducers. The order of this composition matters, because the state will be modified in the order as the reducers were composed, but you should avoid two reducers changing the same domain. If you can’t avoid, mind the order. A <code>Reducer</code> can also focus in a subset of your full AppAction and AppState, and be “lifted” from the subset to the whole, for example it’s focused on LoginAction and LoginState, then lifted to the whole AppAction and AppState by providing the KeyPath where the subset LoginAction is in the AppAction, and where the subset LoginState is in the AppState.</p></div>
+  </div>
+</div>
+  
+  <section id='topics' class='contenttable alt-light'>
+  <div class='container'>
+    <h2 class='title'>Topics</h2>
+
+    
+      <div class="row contenttable-section">
+        <div class="col section-title large-3 medium-3 small-12">
+          <h3 class="title">Instance Properties</h3>
+        </div>
+  
+        <div class="col section-content large-9 medium-9 small-12">
+          
+            <div class="link-block topic">
+              
+                <a href="../../../documentation/reducer/reducer/reduce.html" class="link has-adjacent-elements">
+                  <code class="decorated-title"><span class='decorator'>let</span><span class='decorator empty-token'> </span><span class='identifier'>reduce</span><span class='decorator'>: (</span><span class='decorator'>ActionType</span><span class='decorator'>, </span><span class='decorator'>inout</span><span class='decorator empty-token'> </span><span class='decorator'>StateType</span><span class='decorator'>) -&gt; </span><span class='decorator'>Void</span></code>
+                </a>
+              
+              
+              <div class="abstract">
+                <div class="content">Execute the wrapped reduce function. You must provide the parameters <code>action: ActionType</code> (the action to be evaluated during the reducing process) and an <code>inout</code> version of the latest <code>state: StateType</code>, (the current state in your single source-of-truth). State will be mutated in place (<code>inout</code>) and finish with the calculated new state.</div>
+              </div>
+            </div>
+          
+        </div>
+      </div>
+    
+      <div class="row contenttable-section">
+        <div class="col section-title large-3 medium-3 small-12">
+          <h3 class="title">Instance Methods</h3>
+        </div>
+  
+        <div class="col section-content large-9 medium-9 small-12">
+          
+            <div class="link-block topic">
+              
+                <a href="../../../documentation/reducer/reducer/lift(action:).html" class="link has-adjacent-elements">
+                  <code class="decorated-title"><span class='decorator'>func</span><span class='decorator empty-token'> </span><span class='identifier'>lift</span><span class='decorator'>&lt;</span><span class='decorator'>GlobalActionType</span><span class='decorator'>&gt;(</span><span class='decorator'>action</span><span class='decorator'>: </span><span class='decorator'>KeyPath</span><span class='decorator'>&lt;</span><span class='decorator'>GlobalActionType</span><span class='decorator'>, </span><span class='decorator'>ActionType</span><span class='decorator'>?&gt;) -&gt; </span><span class='decorator'>Reducer</span><span class='decorator'>&lt;</span><span class='decorator'>GlobalActionType</span><span class='decorator'>, </span><span class='decorator'>StateType</span><span class='decorator'>&gt;</span></code>
+                </a>
+              
+              
+              <div class="abstract">
+                <div class="content">A type-lifting method. The global state of your app is <em>Whole</em>, and the <code>Reducer</code> handles <em>Part</em>, that is a sub-state.</div>
+              </div>
+            </div>
+          
+            <div class="link-block topic">
+              
+                <a href="../../../documentation/reducer/reducer/lift(action:state:).html" class="link has-adjacent-elements">
+                  <code class="decorated-title"><span class='decorator'>func</span><span class='decorator empty-token'> </span><span class='identifier'>lift</span><span class='decorator'>&lt;</span><span class='decorator'>GlobalActionType</span><span class='decorator'>, </span><span class='decorator'>GlobalStateType</span><span class='decorator'>&gt;(</span><span class='decorator'>action</span><span class='decorator'>: </span><span class='decorator'>KeyPath</span><span class='decorator'>&lt;</span><span class='decorator'>GlobalActionType</span><span class='decorator'>, </span><span class='decorator'>ActionType</span><span class='decorator'>?&gt;, </span><span class='decorator'>state</span><span class='decorator'>: </span><span class='decorator'>WritableKeyPath</span><span class='decorator'>&lt;</span><span class='decorator'>GlobalStateType</span><span class='decorator'>, </span><span class='decorator'>StateType</span><span class='decorator'>&gt;) -&gt; </span><span class='decorator'>Reducer</span><span class='decorator'>&lt;</span><span class='decorator'>GlobalActionType</span><span class='decorator'>, </span><span class='decorator'>GlobalStateType</span><span class='decorator'>&gt;</span></code>
+                </a>
+              
+              
+              <div class="abstract">
+                <div class="content">A type-lifting method. The global state of your app is <em>Whole</em>, and the <code>Reducer</code> handles <em>Part</em>, that is a sub-state.</div>
+              </div>
+            </div>
+          
+            <div class="link-block topic">
+              
+                <a href="../../../documentation/reducer/reducer/lift(actiongetter:stategetter:statesetter:).html" class="link has-adjacent-elements">
+                  <code class="decorated-title"><span class='decorator'>func</span><span class='decorator empty-token'> </span><span class='identifier'>lift</span><span class='decorator'>&lt;</span><span class='decorator'>GlobalActionType</span><span class='decorator'>, </span><span class='decorator'>GlobalStateType</span><span class='decorator'>&gt;(</span><span class='decorator'>actionGetter</span><span class='decorator'>: (</span><span class='decorator'>GlobalActionType</span><span class='decorator'>) -&gt; </span><span class='decorator'>ActionType</span><span class='decorator'>?, </span><span class='decorator'>stateGetter</span><span class='decorator'>: (</span><span class='decorator'>GlobalStateType</span><span class='decorator'>) -&gt; </span><span class='decorator'>StateType</span><span class='decorator'>, </span><span class='decorator'>stateSetter</span><span class='decorator'>: (</span><span class='decorator'>inout</span><span class='decorator empty-token'> </span><span class='decorator'>GlobalStateType</span><span class='decorator'>, </span><span class='decorator'>StateType</span><span class='decorator'>) -&gt; </span><span class='decorator'>Void</span><span class='decorator'>) -&gt; </span><span class='decorator'>Reducer</span><span class='decorator'>&lt;</span><span class='decorator'>GlobalActionType</span><span class='decorator'>, </span><span class='decorator'>GlobalStateType</span><span class='decorator'>&gt;</span></code>
+                </a>
+              
+              
+              <div class="abstract">
+                <div class="content">A type-lifting method. The global state of your app is <em>Whole</em>, and the <code>Reducer</code> handles <em>Part</em>, that is a sub-state.</div>
+              </div>
+            </div>
+          
+            <div class="link-block topic">
+              
+                <a href="../../../documentation/reducer/reducer/lift(state:).html" class="link has-adjacent-elements">
+                  <code class="decorated-title"><span class='decorator'>func</span><span class='decorator empty-token'> </span><span class='identifier'>lift</span><span class='decorator'>&lt;</span><span class='decorator'>GlobalStateType</span><span class='decorator'>&gt;(</span><span class='decorator'>state</span><span class='decorator'>: </span><span class='decorator'>WritableKeyPath</span><span class='decorator'>&lt;</span><span class='decorator'>GlobalStateType</span><span class='decorator'>, </span><span class='decorator'>StateType</span><span class='decorator'>&gt;) -&gt; </span><span class='decorator'>Reducer</span><span class='decorator'>&lt;</span><span class='decorator'>ActionType</span><span class='decorator'>, </span><span class='decorator'>GlobalStateType</span><span class='decorator'>&gt;</span></code>
+                </a>
+              
+              
+              <div class="abstract">
+                <div class="content">A type-lifting method. The global state of your app is <em>Whole</em>, and the <code>Reducer</code> handles <em>Part</em>, that is a sub-state.</div>
+              </div>
+            </div>
+          
+            <div class="link-block topic">
+              
+                <a href="../../../documentation/reducer/reducer/lifttocollection(action:statecollection:)-4gphe.html" class="link has-adjacent-elements">
+                  <code class="decorated-title"><span class='decorator'>func</span><span class='decorator empty-token'> </span><span class='identifier'>liftToCollection</span><span class='decorator'>&lt;</span><span class='decorator'>GlobalAction</span><span class='decorator'>, </span><span class='decorator'>GlobalState</span><span class='decorator'>, </span><span class='decorator'>CollectionState</span><span class='decorator'>&gt;(</span><span class='decorator'>action</span><span class='decorator'>: </span><span class='decorator'>KeyPath</span><span class='decorator'>&lt;</span><span class='decorator'>GlobalAction</span><span class='decorator'>, (index</span><span class='decorator'>: </span><span class='decorator'>CollectionState</span><span class='decorator'>.</span><span class='decorator'>Index</span><span class='decorator'>, action</span><span class='decorator'>: </span><span class='decorator'>ActionType</span><span class='decorator'>)?&gt;, </span><span class='decorator'>stateCollection</span><span class='decorator'>: </span><span class='decorator'>WritableKeyPath</span><span class='decorator'>&lt;</span><span class='decorator'>GlobalState</span><span class='decorator'>, </span><span class='decorator'>CollectionState</span><span class='decorator'>&gt;) -&gt; </span><span class='decorator'>Reducer</span><span class='decorator'>&lt;</span><span class='decorator'>GlobalAction</span><span class='decorator'>, </span><span class='decorator'>GlobalState</span><span class='decorator'>&gt;</span></code>
+                </a>
+              
+              
+              <div class="abstract">
+                <div class="content">A type-lifting method for collections. The global state of your app is <em>Whole</em>, and the <code>Reducer</code> handles an element that is inside of a collection, which itself is sub-state of the global. Let’s call this single element <em>Part</em>.</div>
+              </div>
+            </div>
+          
+            <div class="link-block topic">
+              
+                <a href="../../../documentation/reducer/reducer/lifttocollection(action:statecollection:)-5a160.html" class="link has-adjacent-elements">
+                  <code class="decorated-title"><span class='decorator'>func</span><span class='decorator empty-token'> </span><span class='identifier'>liftToCollection</span><span class='decorator'>&lt;</span><span class='decorator'>GlobalAction</span><span class='decorator'>, </span><span class='decorator'>GlobalState</span><span class='decorator'>, </span><span class='decorator'>CollectionState</span><span class='decorator'>&gt;(</span><span class='decorator'>action</span><span class='decorator'>: </span><span class='decorator'>KeyPath</span><span class='decorator'>&lt;</span><span class='decorator'>GlobalAction</span><span class='decorator'>, (id</span><span class='decorator'>: </span><span class='decorator'>StateType</span><span class='decorator'>.</span><span class='decorator'>ID</span><span class='decorator'>, action</span><span class='decorator'>: </span><span class='decorator'>ActionType</span><span class='decorator'>)?&gt;, </span><span class='decorator'>stateCollection</span><span class='decorator'>: </span><span class='decorator'>WritableKeyPath</span><span class='decorator'>&lt;</span><span class='decorator'>GlobalState</span><span class='decorator'>, </span><span class='decorator'>CollectionState</span><span class='decorator'>&gt;) -&gt; </span><span class='decorator'>Reducer</span><span class='decorator'>&lt;</span><span class='decorator'>GlobalAction</span><span class='decorator'>, </span><span class='decorator'>GlobalState</span><span class='decorator'>&gt;</span></code>
+                </a>
+              
+              
+              <div class="abstract">
+                <div class="content">A type-lifting method for collections. The global state of your app is <em>Whole</em>, and the <code>Reducer</code> handles an element that is inside of a collection, which itself is sub-state of the global. Let’s call this single element <em>Part</em>.</div>
+              </div>
+            </div>
+          
+            <div class="link-block topic">
+              
+                <a href="../../../documentation/reducer/reducer/lifttocollection(action:statecollection:identifier:).html" class="link has-adjacent-elements">
+                  <code class="decorated-title"><span class='decorator'>func</span><span class='decorator empty-token'> </span><span class='identifier'>liftToCollection</span><span class='decorator'>&lt;</span><span class='decorator'>GlobalAction</span><span class='decorator'>, </span><span class='decorator'>GlobalState</span><span class='decorator'>, </span><span class='decorator'>CollectionState</span><span class='decorator'>, </span><span class='decorator'>ID</span><span class='decorator'>&gt;(</span><span class='decorator'>action</span><span class='decorator'>: </span><span class='decorator'>KeyPath</span><span class='decorator'>&lt;</span><span class='decorator'>GlobalAction</span><span class='decorator'>, (id</span><span class='decorator'>: </span><span class='decorator'>ID</span><span class='decorator'>, action</span><span class='decorator'>: </span><span class='decorator'>ActionType</span><span class='decorator'>)?&gt;, </span><span class='decorator'>stateCollection</span><span class='decorator'>: </span><span class='decorator'>WritableKeyPath</span><span class='decorator'>&lt;</span><span class='decorator'>GlobalState</span><span class='decorator'>, </span><span class='decorator'>CollectionState</span><span class='decorator'>&gt;, </span><span class='decorator'>identifier</span><span class='decorator'>: </span><span class='decorator'>KeyPath</span><span class='decorator'>&lt;</span><span class='decorator'>StateType</span><span class='decorator'>, </span><span class='decorator'>ID</span><span class='decorator'>&gt;) -&gt; </span><span class='decorator'>Reducer</span><span class='decorator'>&lt;</span><span class='decorator'>GlobalAction</span><span class='decorator'>, </span><span class='decorator'>GlobalState</span><span class='decorator'>&gt;</span></code>
+                </a>
+              
+              
+              <div class="abstract">
+                <div class="content">A type-lifting method for collections. The global state of your app is <em>Whole</em>, and the <code>Reducer</code> handles an element that is inside of a collection, which itself is sub-state of the global. Let’s call this single element <em>Part</em>.</div>
+              </div>
+            </div>
+          
+        </div>
+      </div>
+    
+      <div class="row contenttable-section">
+        <div class="col section-title large-3 medium-3 small-12">
+          <h3 class="title">Type Properties</h3>
+        </div>
+  
+        <div class="col section-content large-9 medium-9 small-12">
+          
+            <div class="link-block topic">
+              
+                <a href="../../../documentation/reducer/reducer/identity.html" class="link has-adjacent-elements">
+                  <code class="decorated-title"><span class='decorator'>static</span><span class='decorator empty-token'> </span><span class='decorator'>var</span><span class='decorator empty-token'> </span><span class='identifier'>identity</span><span class='decorator'>: </span><span class='decorator'>Reducer</span><span class='decorator'>&lt;</span><span class='decorator'>ActionType</span><span class='decorator'>, </span><span class='decorator'>StateType</span><span class='decorator'>&gt;</span></code>
+                </a>
+              
+              
+              <div class="abstract">
+                <div class="content">No-op reducer. Composing it with any other reducer will not change anything from the other reducer behaviour, regardless if the identity reducer is on the left-hand side or the right-hand side or this composition. This is the neutral element in a monoidal composition.</div>
+              </div>
+            </div>
+          
+        </div>
+      </div>
+    
+      <div class="row contenttable-section">
+        <div class="col section-title large-3 medium-3 small-12">
+          <h3 class="title">Type Methods</h3>
+        </div>
+  
+        <div class="col section-content large-9 medium-9 small-12">
+          
+            <div class="link-block topic">
+              
+                <a href="../../../documentation/reducer/reducer/compose(_:_:).html" class="link has-adjacent-elements">
+                  <code class="decorated-title"><span class='decorator'>static</span><span class='decorator empty-token'> </span><span class='decorator'>func</span><span class='decorator empty-token'> </span><span class='identifier'>compose</span><span class='decorator'>(</span><span class='decorator'>Reducer</span><span class='decorator'>, </span><span class='decorator'>Reducer</span><span class='decorator'>...) -&gt; </span><span class='decorator'>Reducer</span></code>
+                </a>
+              
+              
+              <div class="abstract">
+                <div class="content">Composes two or more reducers in series, to be evaluated from the left to the right for each incoming action.</div>
+              </div>
+            </div>
+          
+            <div class="link-block topic">
+              
+                <a href="../../../documentation/reducer/reducer/reduce(_:).html" class="link has-adjacent-elements">
+                  <code class="decorated-title"><span class='decorator'>static</span><span class='decorator empty-token'> </span><span class='decorator'>func</span><span class='decorator empty-token'> </span><span class='identifier'>reduce</span><span class='decorator'>((</span><span class='decorator'>ActionType</span><span class='decorator'>, </span><span class='decorator'>inout</span><span class='decorator empty-token'> </span><span class='decorator'>StateType</span><span class='decorator'>) -&gt; </span><span class='decorator'>Void</span><span class='decorator'>) -&gt; </span><span class='decorator'>Reducer</span></code>
+                </a>
+              
+              
+              <div class="abstract">
+                <div class="content">Reducer initialiser takes only the underlying function <code>(ActionType, inout StateType) -&gt; Void</code> that is the reducer function itself.</div>
+              </div>
+            </div>
+          
+        </div>
+      </div>
+    
+  </div>
+</section>
+  
+</main>
+      </div>
+    </div>
+    <footer class="footer"></footer>
+    <script>hljs.highlightAll();</script>
+  </body>
+</html>

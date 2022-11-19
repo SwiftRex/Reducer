@@ -69,8 +69,9 @@ sourcery:
 
 # Docc
 docc:
-	xcodebuild docbuild -scheme "Reducer-Package" -sdk iphonesimulator -configuration Debug -destination "platform=iOS Simulator,name=iPhone SE (2nd generation),OS=15.2" SYMROOT=tmp
-	mint run docc2html -f tmp/Debug-iphonesimulator/Reducer.doccarchive docs/docc/Reducer
+	xcodebuild docbuild -scheme "Reducer" -sdk macosx12.3 -configuration Debug -destination "platform=macOS" SYMROOT=tmp
+	cp -R tmp/Debug/Reducer.doccarchive docs/docc/
+	mint run docc2html -f docs/docc/Reducer.doccarchive docs/docc/Reducer
 	rm -rf tmp
 
 # Jazzy

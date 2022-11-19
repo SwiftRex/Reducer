@@ -18,3 +18,4 @@ coverage.txt
 ehthumbs.db
 Thumbs.db
 tmp
+Gemfile.lock
