@@ -3,7 +3,7 @@
     Unidirectional Dataflow for your favourite reactive framework<br /><br />
 </p>
 
-![Build Status](https://github.com/SwiftRex/SwiftRex/actions/workflows/swift.yml/badge.svg?branch=develop)
+![Build Status](https://github.com/SwiftRex/Reducer/actions/workflows/swift.yml/badge.svg?branch=develop)
 [![codecov](https://codecov.io/gh/SwiftRex/Reducer/branch/master/graph/badge.svg?token=JqeB4QMx0T)](https://codecov.io/gh/SwiftRex/Reducer)
 [![Jazzy Documentation](https://raw.githubusercontent.com/SwiftRex/Reducer/develop/docs/api/Reducer/badge.svg)](https://swiftrex.github.io/SwiftRex/api/index.html)
 [![CocoaPods compatible](https://img.shields.io/cocoapods/v/SwiftRex.svg)](https://cocoapods.org/pods/SwiftRex)
@@ -159,7 +159,30 @@ struct AppState {
 ```
 Given a reducer that is generic over `WeatherAction` and `WeatherState`, we can "lift" it to the global types `AppAction` and `AppState` by telling this reducer how to find in the global tree the properties that it needs. That would be `\AppAction.weather` and `\AppState.weather`. The same can be done for the middleware, and for the other 2 reducers and middlewares of our app.
 
-When all of them are lifted to a common type, they can be combined together using the diamond operator (`<>`) and set as the store handler.
+When all of them are lifted to a common type, they can be combined together using `Reducer.compose(reducer1, reducer2, reducer3...)` function, or the DSL form:
+
+```swift
+Reducer.compose {
+    reducer1
+
+    reducer2
+
+    Reducer
+        .login
+        .lift(action: \.loginAction, state: \.loginState)
+
+    Reducer
+        .lifecycle
+        .lift(action: \.lifecycleAction, state: \.lifecycleState)
+
+    Reducer.app
+
+    Reducer.reduce { action, state in
+        // some inline reducer
+    }
+
+}
+```
 
 > **_IMPORTANT:_** Because enums in Swift don't have KeyPath as structs do, we strongly recommend reading [Action Enum Properties](docs/markdown/ActionEnumProperties.md) document and implementing properties for each case, either manually or using code generators, so later you avoid writing lots and lots of error-prone switch/case. We also offer some templates to help you on that.
 
