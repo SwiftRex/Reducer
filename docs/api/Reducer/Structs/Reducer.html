@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Reducer Structure Reference</title>
+    <link rel="stylesheet" type="text/css" href="../css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="../css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="../js/jquery.min.js" defer></script>
+    <script src="../js/jazzy.js" defer></script>
+    
+    <script src="../js/lunr.min.js" defer></script>
+    <script src="../js/typeahead.jquery.js" defer></script>
+    <script src="../js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Struct/Reducer" class="dashAnchor"></a>
+    <a title="Reducer Structure Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="../index.html">Reducer 0.9.0 Docs</a> (100% documented)</p>
+        <div class="header-right">
+          <form role="search" action="../search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </div>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="../index.html">Reducer Reference</a>
+        <img id="carat" src="../img/carat.png" alt=""/>
+        Reducer Structure Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="../Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="../Structs/Reducer.html">Reducer</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>Reducer</h1>
+              <div class="declaration">
+                <div class="language">
+                  
+                  <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">Reducer</span><span class="o">&lt;</span><span class="kt">ActionType</span><span class="p">,</span> <span class="kt">StateType</span><span class="o">&gt;</span></code></pre>
+
+                </div>
+              </div>
+            <p>An entity that calculates the new state when given current state and an incoming action <code>(Action, inout State) -&gt; Void</code>.</p>
+
+<p>An app triggers several actions over time, either coming from user input (button tap, scroll, pinch gesture), from sensors (CoreLocation, NFC,
+HealthKit), communication protocols (CoreBluetooth, networking, WebSocket), databases (CoreData, Realm), timers and many more.
+An app also starts with an initial state, right after its cold launch.
+For each action that arrives, the state can be modified, and this is exactly what a <code>Reducer</code> does: folds all actions that arrived since the app
+launch, plus the initial state, into the current state. One at the time.
+The shape of a <code>Reducer</code> could be represented as <code>(Action, State) -&gt; State</code>, or given the incoming action and the latest known state, calculate the
+new state.
+For the sake of performance, and keeping the same semantics, the SwiftRex <code>Reducer</code> is represented as <code>(Action, inout State) -&gt; Void</code>, avoiding
+unnecessary copies and allowing performance tuning for arrays or other big collections.
+A <code>Reducer</code> can focus in a small part, and be composed with other reducers. The order of this composition matters, because the state will be modified
+in the order as the reducers were composed, but you should avoid two reducers changing the same domain. If you can&rsquo;t avoid, mind the order.
+A <code>Reducer</code> can also focus in a subset of your full AppAction and AppState, and be &ldquo;lifted&rdquo; from the subset to the whole, for example it&rsquo;s focused on
+LoginAction and LoginState, then lifted to the whole AppAction and AppState by providing the KeyPath where the subset LoginAction is in the
+AppAction, and where the subset LoginState is in the AppState.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ReducerAAV6reduceyyx_q_ztcvp"></a>
+                    <a name="//apple_ref/swift/Property/reduce" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ReducerAAV6reduceyyx_q_ztcvp">reduce</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Execute the wrapped reduce function. You must provide the parameters <code>action: ActionType</code> (the action to be
+evaluated during the reducing process) and an <code>inout</code> version of the latest <code>state: StateType</code>, (the current
+state in your single source-of-truth).
+State will be mutated in place (<code>inout</code>) and finish with the calculated new state.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="k">let</span> <span class="nv">reduce</span><span class="p">:</span> <span class="p">(</span><span class="kt">ActionType</span><span class="p">,</span> <span class="k">inout</span> <span class="kt">StateType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ReducerAAV6reduceyAByxq_Gyx_q_ztcFZ"></a>
+                    <a name="//apple_ref/swift/Method/reduce(_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ReducerAAV6reduceyAByxq_Gyx_q_ztcFZ">reduce(_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Reducer initialiser takes only the underlying function <code>(ActionType, inout StateType) -&gt; Void</code> that is the reducer
+function itself.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">reduce</span><span class="p">(</span><span class="n">_</span> <span class="nv">reduce</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">ActionType</span><span class="p">,</span> <span class="k">inout</span> <span class="kt">StateType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Reducer</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>reduce</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>a pure function that calculates the new state from an action and the current state.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ReducerAAV7composeyAByxq_GAD_ADdtFZ"></a>
+                    <a name="//apple_ref/swift/Method/compose(_:_:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ReducerAAV7composeyAByxq_GAD_ADdtFZ">compose(_:<wbr>_:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Composes two or more reducers in series, to be evaluated from the left to the right for each incoming action.</p>
+
+<p>When composing reducer A with reducer B, when an action X arrives, first it will be forwarded to
+reducer A together with the initial state. This reducer may return a slightly (or completely) changed state from
+that operation, and this state will then be forwarded to reducer B together with the same action X. If you change
+the order, results may vary as you can imagine. Monoids don&rsquo;t necessarily hold the commutative axiom, although
+sometimes they do. What they necessarily hold is the associativity axiom, which means that if you compose A and B,
+and later C, it&rsquo;s exactly the same as if you compose A to a previously composed B and C:
+<code>.compose(.compose(A, B), C) == .compose(A, .compose(B, C))</code>. So please don&rsquo;t worry about surrounding your reducers with parenthesis:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">globalReducer</span> <span class="o">=</span> <span class="o">.</span><span class="nf">compose</span><span class="p">(</span><span class="n">firstReducer</span><span class="p">,</span> <span class="n">secondReducer</span><span class="p">,</span> <span class="n">thirdReducer</span><span class="p">,</span> <span class="n">andSoOn</span><span class="p">)</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">compose</span><span class="p">(</span><span class="n">_</span> <span class="nv">first</span><span class="p">:</span> <span class="kt">Reducer</span><span class="p">,</span> <span class="n">_</span> <span class="nv">others</span><span class="p">:</span> <span class="kt">Reducer</span><span class="o">...</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Reducer</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>first</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>First reducer <code>(ActionType, inout StateType) -&gt; Void</code>, let&rsquo;s call it <code>f(x)</code></p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>others</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>Second, Third, nth reducers <code>(ActionType, inout StateType) -&gt; Void</code>, let&rsquo;s call it <code>g(x)</code></p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>a composed reducer <code>(ActionType, inout StateType) -&gt; Void</code> equivalent to <code>g(f(x))</code></p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ReducerAAV8identityAByxq_GvpZ"></a>
+                    <a name="//apple_ref/swift/Variable/identity" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ReducerAAV8identityAByxq_GvpZ">identity</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>No-op reducer. Composing it with any other reducer will not change anything from the other reducer behaviour, regardless if the identity reducer
+is on the left-hand side or the right-hand side or this composition. This is the neutral element in a monoidal composition.</p>
+
+<p>Therefore:</p>
+<pre class="highlight swift"><code>   <span class="o">.</span><span class="nf">compose</span><span class="p">(</span> <span class="kt">Reducer</span><span class="o">&lt;</span><span class="kt">ActionType</span><span class="p">,</span> <span class="kt">StateType</span><span class="o">&gt;</span><span class="p">,</span> <span class="o">.</span><span class="n">identity</span> <span class="p">)</span>
+<span class="o">==</span> <span class="o">.</span><span class="nf">compose</span><span class="p">(</span> <span class="o">.</span><span class="n">identity</span><span class="p">,</span> <span class="kt">Reducer</span><span class="o">&lt;</span><span class="kt">ActionType</span><span class="p">,</span> <span class="kt">StateType</span><span class="o">&gt;</span> <span class="p">)</span>
+<span class="o">==</span> <span class="kt">Reducer</span><span class="o">&lt;</span><span class="kt">ActionType</span><span class="p">,</span> <span class="kt">StateType</span><span class="o">&gt;</span>
+</code></pre>
+
+<p>This is useful for composition purposes, for example when you call a function <code>Array.reduce</code> in an array of Reducers and you need a no-op start:</p>
+<pre class="highlight swift"><code><span class="p">[</span><span class="n">reducer1</span><span class="p">,</span> <span class="n">reducer2</span><span class="p">]</span><span class="o">.</span><span class="nf">reduce</span><span class="p">(</span><span class="o">.</span><span class="n">identity</span><span class="p">)</span> <span class="p">{</span> <span class="n">accumulator</span><span class="p">,</span> <span class="n">nextReducer</span> <span class="k">in</span>
+   <span class="kt">Reducer</span><span class="o">.</span><span class="nf">compose</span><span class="p">(</span><span class="n">accumulator</span><span class="p">,</span> <span class="n">nextReducer</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="c1">// .identity won't have any behaviour and the final composition ".identity &gt;&gt;&gt; reducer1, reducer2" will be as if .identity wasn't there.</span>
+</code></pre>
+
+<p>The implementation of this reducer, as one should expect, simply ignores the action and returns the state unchanged</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="k">var</span> <span class="nv">identity</span><span class="p">:</span> <span class="kt">Reducer</span><span class="o">&lt;</span><span class="kt">ActionType</span><span class="p">,</span> <span class="kt">StateType</span><span class="o">&gt;</span> <span class="p">{</span> <span class="k">get</span> <span class="p">}</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ReducerAAV4lift12actionGetter05stateD00E6SetterAByqd__qd_0_GxSgqd__c_q_qd_0_cyqd_0_z_q_tctr0_lF"></a>
+                    <a name="//apple_ref/swift/Method/lift(actionGetter:stateGetter:stateSetter:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ReducerAAV4lift12actionGetter05stateD00E6SetterAByqd__qd_0_GxSgqd__c_q_qd_0_cyqd_0_z_q_tctr0_lF">lift(actionGetter:<wbr>stateGetter:<wbr>stateSetter:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A type-lifting method. The global state of your app is <em>Whole</em>, and the <code>Reducer</code> handles <em>Part</em>, that is a
+sub-state.</p>
+
+<p>Let&rsquo;s suppose you may want to have a <code>gpsReducer</code> that knows about the following <code>struct</code>:</p>
+<pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">Location</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">latitude</span><span class="p">:</span> <span class="kt">Double</span>
+    <span class="k">let</span> <span class="nv">longitude</span><span class="p">:</span> <span class="kt">Double</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>Let&rsquo;s call it <em>Part</em>. Both, this state and its reducer will be part of an external framework, used by dozens of
+apps. Internally probably the <code>Reducer</code> will receive some known <code>ActionType</code> and calculate a new location. On the
+main app we have a global state, that we now call <em>Whole</em>.</p>
+<pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">MyGlobalState</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">title</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>
+    <span class="k">let</span> <span class="nv">listOfItems</span><span class="p">:</span> <span class="p">[</span><span class="kt">Item</span><span class="p">]</span>
+    <span class="k">let</span> <span class="nv">currentLocation</span><span class="p">:</span> <span class="kt">Location</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>As expected, <em>Part</em> (<code>Location</code>) is a property of <em>Whole</em> (<code>MyGlobalState</code>). This relationship could be less
+direct, for example there could be several levels of properties until you find the <em>Part</em> in the <em>Whole</em>, like
+<code>global.firstLevel.secondLevel.currentLocation</code>, but let&rsquo;s keep it a single-level for this example.</p>
+
+<p>Because our <code>Store</code> understands <em>Whole</em> (<code>MyGlobalState</code>) and our <code>gpsReducer</code> understands <em>Part</em> (<code>Location</code>), we
+must <code>lift</code> the <code>Reducer</code> to the <em>Whole</em> level, by using:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">globalStateReducer</span> <span class="o">=</span> <span class="n">gpsReducer</span><span class="o">.</span><span class="nf">lift</span><span class="p">(</span>
+    <span class="nv">actionGetter</span><span class="p">:</span> <span class="p">{</span> <span class="nv">$0</span> <span class="p">},</span>
+    <span class="nv">stateGetter</span><span class="p">:</span> <span class="p">{</span> <span class="n">global</span> <span class="k">in</span> <span class="n">global</span><span class="o">.</span><span class="n">currentLocation</span> <span class="p">},</span>
+    <span class="nv">stateSetter</span><span class="p">:</span> <span class="p">{</span> <span class="n">global</span><span class="p">,</span> <span class="n">part</span> <span class="k">in</span> <span class="n">global</span><span class="o">.</span><span class="n">currentLocation</span> <span class="o">=</span> <span class="n">path</span> <span class="p">}</span>
+<span class="p">)</span>
+<span class="c1">// where:</span>
+<span class="c1">//   globalStateReducer: Reducer&lt;MyAction, MyGlobalState&gt;</span>
+<span class="c1">//                                             ↑ lift</span>
+<span class="c1">//           gpsReducer: Reducer&lt;MyAction, Location&gt;</span>
+</code></pre>
+
+<p>Now this reducer can be used within our <code>Store</code> or even composed with others. It also can be used in other apps as
+long as we have a way to lift it to the world of <em>Whole</em>.</p>
+
+<p>Same strategy works for the <code>action</code>, as you can guess by the <code>actionGetter</code> parameter. You can provide a function
+that takes a global action (<em>Whole</em>) and returns an optional local action (<em>Part</em>). It&rsquo;s optional because perhaps
+you want to ignore actions that are not relevant for this reducer.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">lift</span><span class="o">&lt;</span><span class="kt">GlobalActionType</span><span class="p">,</span> <span class="kt">GlobalStateType</span><span class="o">&gt;</span><span class="p">(</span>
+    <span class="nv">actionGetter</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">GlobalActionType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">ActionType</span><span class="p">?,</span>
+    <span class="nv">stateGetter</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="kt">GlobalStateType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">StateType</span><span class="p">,</span>
+    <span class="nv">stateSetter</span><span class="p">:</span> <span class="kd">@escaping</span> <span class="p">(</span><span class="k">inout</span> <span class="kt">GlobalStateType</span><span class="p">,</span> <span class="kt">StateType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span><span class="p">)</span>
+<span class="o">-&gt;</span> <span class="kt">Reducer</span><span class="o">&lt;</span><span class="kt">GlobalActionType</span><span class="p">,</span> <span class="kt">GlobalStateType</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>actionGetter</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>a way to convert a global action into a local action, but it&rsquo;s optional because maybe this
+          reducer shouldn&rsquo;t care about certain actions. Because actions are usually enums, you can switch
+          over the enum and in case it&rsquo;s nothing you care about, you simply return nil in the closure. If
+          you don&rsquo;t want to lift this reducer in terms of <code>action</code>, just provide the identity function
+          <code>{ $0 }</code> as input.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>stateGetter</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>a way to read from a global state and extract only the part that it&rsquo;s relevant for this reducer,
+         by traversing the tree of the global state until you find the property you want, for example:
+         <code>{ $0.currentGame.scoreBoard }</code></p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>stateSetter</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>a way to write back into the global state once you finished reducing the <em>Part</em>, so now you have
+         a new part that was calculated by this reducer and you want to set it into the global state, also
+         provided as the first parameter as an <code>inout</code> property:
+         <code>{ globalState, newScoreBoard in globalState.currentGame.scoreBoard = newScoreBoard }</code></p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>a <code>Reducer&lt;GlobalAction, GlobalState&gt;</code> that maps actions and states from the original specialised
+       reducer into a more generic and global reducer, to be used in a larger context.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ReducerAAV4lift6action5stateAByqd__qd_0_Gs7KeyPathCyqd__xSgG_s08WritableeF0Cyqd_0_q_Gtr0_lF"></a>
+                    <a name="//apple_ref/swift/Method/lift(action:state:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ReducerAAV4lift6action5stateAByqd__qd_0_Gs7KeyPathCyqd__xSgG_s08WritableeF0Cyqd_0_q_Gtr0_lF">lift(action:<wbr>state:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A type-lifting method. The global state of your app is <em>Whole</em>, and the <code>Reducer</code> handles <em>Part</em>, that is a
+sub-state.</p>
+
+<p>Let&rsquo;s suppose you may want to have a <code>gpsReducer</code> that knows about the following <code>struct</code>:</p>
+<pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">Location</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">latitude</span><span class="p">:</span> <span class="kt">Double</span>
+    <span class="k">let</span> <span class="nv">longitude</span><span class="p">:</span> <span class="kt">Double</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>Let&rsquo;s call it <em>Part</em>. Both, this state and its reducer will be part of an external framework, used by dozens of
+apps. Internally probably the <code>Reducer</code> will receive some known <code>ActionType</code> and calculate a new location. On the
+main app we have a global state, that we now call <em>Whole</em>.</p>
+<pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">MyGlobalState</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">title</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>
+    <span class="k">let</span> <span class="nv">listOfItems</span><span class="p">:</span> <span class="p">[</span><span class="kt">Item</span><span class="p">]</span>
+    <span class="k">let</span> <span class="nv">currentLocation</span><span class="p">:</span> <span class="kt">Location</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>As expected, <em>Part</em> (<code>Location</code>) is a property of <em>Whole</em> (<code>MyGlobalState</code>). This relationship could be less
+direct, for example there could be several levels of properties until you find the <em>Part</em> in the <em>Whole</em>, like
+<code>global.firstLevel.secondLevel.currentLocation</code>, but let&rsquo;s keep it a single-level for this example.</p>
+
+<p>Because our <code>Store</code> understands <em>Whole</em> (<code>MyGlobalState</code>) and our <code>gpsReducer</code> understands <em>Part</em> (<code>Location</code>), we
+must <code>lift</code> the <code>Reducer</code> to the <em>Whole</em> level, by using:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">globalStateReducer</span> <span class="o">=</span> <span class="n">gpsReducer</span><span class="o">.</span><span class="nf">lift</span><span class="p">(</span>
+    <span class="nv">action</span><span class="p">:</span> <span class="p">\</span><span class="o">.</span><span class="k">self</span><span class="p">,</span>
+    <span class="nv">state</span><span class="p">:</span> <span class="p">\</span><span class="o">.</span><span class="n">currentLocation</span>
+<span class="p">)</span>
+<span class="c1">// where:</span>
+<span class="c1">//   globalStateReducer: Reducer&lt;MyAction, MyGlobalState&gt;</span>
+<span class="c1">//                                             ↑ lift</span>
+<span class="c1">//           gpsReducer: Reducer&lt;MyAction, Location&gt;</span>
+</code></pre>
+
+<p>Now this reducer can be used within our <code>Store</code> or even composed with others. It also can be used in other apps as
+long as we have a way to lift it to the world of <em>Whole</em>.</p>
+
+<p>Same strategy works for the <code>action</code>, as you can guess by the <code>action</code> KeyPath parameter. You can provide a KeyPath
+that takes a global action (<em>Whole</em>) and returns an optional local action (<em>Part</em>). It&rsquo;s optional because perhaps
+you want to ignore actions that are not relevant for this reducer.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">lift</span><span class="o">&lt;</span><span class="kt">GlobalActionType</span><span class="p">,</span> <span class="kt">GlobalStateType</span><span class="o">&gt;</span><span class="p">(</span>
+    <span class="nv">action</span><span class="p">:</span> <span class="kt">KeyPath</span><span class="o">&lt;</span><span class="kt">GlobalActionType</span><span class="p">,</span> <span class="kt">ActionType</span><span class="p">?</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="nv">state</span><span class="p">:</span> <span class="kt">WritableKeyPath</span><span class="o">&lt;</span><span class="kt">GlobalStateType</span><span class="p">,</span> <span class="kt">StateType</span><span class="o">&gt;</span><span class="p">)</span>
+<span class="o">-&gt;</span> <span class="kt">Reducer</span><span class="o">&lt;</span><span class="kt">GlobalActionType</span><span class="p">,</span> <span class="kt">GlobalStateType</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>action</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>a read-only key-path from global action into a local action, but it&rsquo;s optional because maybe this
+    reducer shouldn&rsquo;t care about certain actions. Because actions are usually enums, you can switch over
+    the enum and in case it&rsquo;s nothing you care about, you simply return nil in the closure. If you don&rsquo;t
+    want to lift this reducer in terms of <code>action</code>, just remove this parameter from the call.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>state</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>a writable key-path from global state that traverses into a local state, by extracting only the part
+   that it&rsquo;s relevant for this reducer. This will also be used to set the new local state into the global
+   state once the reducer finishes it&rsquo;s operation. For example: <code>\.currentGame.scoreBoard</code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>a <code>Reducer&lt;GlobalAction, GlobalState&gt;</code> that maps actions and states from the original specialised
+       reducer into a more generic and global reducer, to be used in a larger context.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ReducerAAV4lift5stateAByxqd__Gs15WritableKeyPathCyqd__q_G_tlF"></a>
+                    <a name="//apple_ref/swift/Method/lift(state:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ReducerAAV4lift5stateAByxqd__Gs15WritableKeyPathCyqd__q_G_tlF">lift(state:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A type-lifting method. The global state of your app is <em>Whole</em>, and the <code>Reducer</code> handles <em>Part</em>, that is a
+sub-state.</p>
+
+<p>Let&rsquo;s suppose you may want to have a <code>gpsReducer</code> that knows about the following <code>struct</code>:</p>
+<pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">Location</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">latitude</span><span class="p">:</span> <span class="kt">Double</span>
+    <span class="k">let</span> <span class="nv">longitude</span><span class="p">:</span> <span class="kt">Double</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>Let&rsquo;s call it <em>Part</em>. Both, this state and its reducer will be part of an external framework, used by dozens of
+apps. Internally probably the <code>Reducer</code> will receive some known <code>ActionType</code> and calculate a new location. On the
+main app we have a global state, that we now call <em>Whole</em>.</p>
+<pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">MyGlobalState</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">title</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>
+    <span class="k">let</span> <span class="nv">listOfItems</span><span class="p">:</span> <span class="p">[</span><span class="kt">Item</span><span class="p">]</span>
+    <span class="k">let</span> <span class="nv">currentLocation</span><span class="p">:</span> <span class="kt">Location</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>As expected, <em>Part</em> (<code>Location</code>) is a property of <em>Whole</em> (<code>MyGlobalState</code>). This relationship could be less
+direct, for example there could be several levels of properties until you find the <em>Part</em> in the <em>Whole</em>, like
+<code>global.firstLevel.secondLevel.currentLocation</code>, but let&rsquo;s keep it a single-level for this example.</p>
+
+<p>Because our <code>Store</code> understands <em>Whole</em> (<code>MyGlobalState</code>) and our <code>gpsReducer</code> understands <em>Part</em> (<code>Location</code>), we
+must <code>lift</code> the <code>Reducer</code> to the <em>Whole</em> level, by using:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">globalStateReducer</span> <span class="o">=</span> <span class="n">gpsReducer</span><span class="o">.</span><span class="nf">lift</span><span class="p">(</span>
+    <span class="nv">action</span><span class="p">:</span> <span class="p">\</span><span class="o">.</span><span class="k">self</span><span class="p">,</span>
+    <span class="nv">state</span><span class="p">:</span> <span class="p">\</span><span class="o">.</span><span class="n">currentLocation</span>
+<span class="p">)</span>
+<span class="c1">// where:</span>
+<span class="c1">//   globalStateReducer: Reducer&lt;MyAction, MyGlobalState&gt;</span>
+<span class="c1">//                                             ↑ lift</span>
+<span class="c1">//           gpsReducer: Reducer&lt;MyAction, Location&gt;</span>
+</code></pre>
+
+<p>Now this reducer can be used within our <code>Store</code> or even composed with others. It also can be used in other apps as
+long as we have a way to lift it to the world of <em>Whole</em>.</p>
+
+<p>Same strategy works for the <code>action</code>, as you can guess by the <code>action</code> KeyPath parameter. You can provide a KeyPath
+that takes a global action (<em>Whole</em>) and returns an optional local action (<em>Part</em>). It&rsquo;s optional because perhaps
+you want to ignore actions that are not relevant for this reducer.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">lift</span><span class="o">&lt;</span><span class="kt">GlobalStateType</span><span class="o">&gt;</span><span class="p">(</span>
+    <span class="nv">state</span><span class="p">:</span> <span class="kt">WritableKeyPath</span><span class="o">&lt;</span><span class="kt">GlobalStateType</span><span class="p">,</span> <span class="kt">StateType</span><span class="o">&gt;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Reducer</span><span class="o">&lt;</span><span class="kt">ActionType</span><span class="p">,</span> <span class="kt">GlobalStateType</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>state</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>a writable key-path from global state that traverses into a local state, by extracting only the part
+   that it&rsquo;s relevant for this reducer. This will also be used to set the new local state into the global
+   state once the reducer finishes it&rsquo;s operation. For example: <code>\.currentGame.scoreBoard</code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>a <code>Reducer&lt;ActionType, GlobalState&gt;</code> that maps actions and states from the original specialized
+       reducer into a more generic and global reducer, to be used in a larger context.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ReducerAAV4lift6actionAByqd__q_Gs7KeyPathCyqd__xSgG_tlF"></a>
+                    <a name="//apple_ref/swift/Method/lift(action:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ReducerAAV4lift6actionAByqd__q_Gs7KeyPathCyqd__xSgG_tlF">lift(action:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A type-lifting method. The global state of your app is <em>Whole</em>, and the <code>Reducer</code> handles <em>Part</em>, that is a
+sub-state.</p>
+
+<p>Let&rsquo;s suppose you may want to have a <code>gpsReducer</code> that knows about the following <code>struct</code>:</p>
+<pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">Location</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">latitude</span><span class="p">:</span> <span class="kt">Double</span>
+    <span class="k">let</span> <span class="nv">longitude</span><span class="p">:</span> <span class="kt">Double</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>Let&rsquo;s call it <em>Part</em>. Both, this state and its reducer will be part of an external framework, used by dozens of
+apps. Internally probably the <code>Reducer</code> will receive some known <code>ActionType</code> and calculate a new location. On the
+main app we have a global state, that we now call <em>Whole</em>.</p>
+<pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">MyGlobalState</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">title</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>
+    <span class="k">let</span> <span class="nv">listOfItems</span><span class="p">:</span> <span class="p">[</span><span class="kt">Item</span><span class="p">]</span>
+    <span class="k">let</span> <span class="nv">currentLocation</span><span class="p">:</span> <span class="kt">Location</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>As expected, <em>Part</em> (<code>Location</code>) is a property of <em>Whole</em> (<code>MyGlobalState</code>). This relationship could be less
+direct, for example there could be several levels of properties until you find the <em>Part</em> in the <em>Whole</em>, like
+<code>global.firstLevel.secondLevel.currentLocation</code>, but let&rsquo;s keep it a single-level for this example.</p>
+
+<p>Because our <code>Store</code> understands <em>Whole</em> (<code>MyGlobalState</code>) and our <code>gpsReducer</code> understands <em>Part</em> (<code>Location</code>), we
+must <code>lift</code> the <code>Reducer</code> to the <em>Whole</em> level, by using:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">globalStateReducer</span> <span class="o">=</span> <span class="n">gpsReducer</span><span class="o">.</span><span class="nf">lift</span><span class="p">(</span>
+    <span class="nv">action</span><span class="p">:</span> <span class="p">\</span><span class="o">.</span><span class="k">self</span><span class="p">,</span>
+    <span class="nv">state</span><span class="p">:</span> <span class="p">\</span><span class="o">.</span><span class="n">currentLocation</span>
+<span class="p">)</span>
+<span class="c1">// where:</span>
+<span class="c1">//   globalStateReducer: Reducer&lt;MyAction, MyGlobalState&gt;</span>
+<span class="c1">//                                             ↑ lift</span>
+<span class="c1">//           gpsReducer: Reducer&lt;MyAction, Location&gt;</span>
+</code></pre>
+
+<p>Now this reducer can be used within our <code>Store</code> or even composed with others. It also can be used in other apps as
+long as we have a way to lift it to the world of <em>Whole</em>.</p>
+
+<p>Same strategy works for the <code>action</code>, as you can guess by the <code>action</code> KeyPath parameter. You can provide a KeyPath
+that takes a global action (<em>Whole</em>) and returns an optional local action (<em>Part</em>). It&rsquo;s optional because perhaps
+you want to ignore actions that are not relevant for this reducer.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">lift</span><span class="o">&lt;</span><span class="kt">GlobalActionType</span><span class="o">&gt;</span><span class="p">(</span>
+    <span class="nv">action</span><span class="p">:</span> <span class="kt">KeyPath</span><span class="o">&lt;</span><span class="kt">GlobalActionType</span><span class="p">,</span> <span class="kt">ActionType</span><span class="p">?</span><span class="o">&gt;</span><span class="p">)</span>
+<span class="o">-&gt;</span> <span class="kt">Reducer</span><span class="o">&lt;</span><span class="kt">GlobalActionType</span><span class="p">,</span> <span class="kt">StateType</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>action</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>a read-only key-path from global action into a local action, but it&rsquo;s optional because maybe this
+    reducer shouldn&rsquo;t care about certain actions. Because actions are usually enums, you can switch over
+    the enum and in case it&rsquo;s nothing you care about, you simply return nil in the closure. If you don&rsquo;t
+    want to lift this reducer in terms of <code>action</code>, just remove this parameter from the call.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>a <code>Reducer&lt;GlobalAction, StateType&gt;</code> that maps actions and states from the original specialized
+       reducer into a more generic and global reducer, to be used in a larger context.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ReducerAAV16liftToCollection6action05stateD010identifierAByqd__qd_0_Gs7KeyPathCyqd__qd_2_2id_xADtSgG_s08WritablehI0Cyqd_0_qd_1_GAIyq_qd_2_Gt7ElementQyd_1_Rs_SMRd_1_SHRd_2_r2_lF"></a>
+                    <a name="//apple_ref/swift/Method/liftToCollection(action:stateCollection:identifier:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ReducerAAV16liftToCollection6action05stateD010identifierAByqd__qd_0_Gs7KeyPathCyqd__qd_2_2id_xADtSgG_s08WritablehI0Cyqd_0_qd_1_GAIyq_qd_2_Gt7ElementQyd_1_Rs_SMRd_1_SHRd_2_r2_lF">liftToCollection(action:<wbr>stateCollection:<wbr>identifier:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A type-lifting method for collections. The global state of your app is <em>Whole</em>, and the <code>Reducer</code> handles an element
+that is inside of a collection, which itself is sub-state of the global. Let&rsquo;s call this single element <em>Part</em>.</p>
+
+<p>Let&rsquo;s suppose you may want to have a <code>gpsReducer</code> that knows about the following <code>struct</code>:</p>
+<pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">Location</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">latitude</span><span class="p">:</span> <span class="kt">Double</span>
+    <span class="k">let</span> <span class="nv">longitude</span><span class="p">:</span> <span class="kt">Double</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>Let&rsquo;s call it <em>Part</em>. Both, this state and its reducer will be part of an external framework, used by dozens of
+apps. Internally probably the <code>Reducer</code> will receive some known <code>ActionType</code> and calculate a new location. On the
+main app we have a global state, that we now call <em>Whole</em>.</p>
+<pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">MyGlobalState</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">title</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>
+    <span class="k">let</span> <span class="nv">knownLocations</span><span class="p">:</span> <span class="p">[</span><span class="kt">Location</span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>As expected, <em>Part</em> (<code>Location</code>) is an element of the array <code>knownLocations</code>, which is property of <em>Whole</em>
+(<code>MyGlobalState</code>). This relationship could be less direct, for example there could be several levels of properties
+until you find the <em>Part</em> in the <em>Whole</em>, like <code>global.firstLevel.secondLevel.knownLocations</code>, but let&rsquo;s keep it a
+single-level for this example.</p>
+
+<p>To resolve this single element, we not only have to find the path to the array, but we have to find the element
+inside of the array. There are three methods for doing so:
+1) the element is <code>Identifiable</code> (iOS 13 or later)
+2) the element has a <code>Hashable</code> property that makes it unique, so we can find it in the array using this identifier
+3) using the index of the element in the array</p>
+
+<p>Because our <code>Store</code> understands <em>Whole</em> (<code>MyGlobalState</code>) and our <code>gpsReducer</code> understands <em>Part</em> (<code>Location</code>), we
+must <code>liftToCollection</code> the <code>Reducer</code> to the <em>Whole</em> level, by using:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">globalStateReducer</span> <span class="o">=</span> <span class="n">gpsReducer</span><span class="o">.</span><span class="nf">liftToCollection</span><span class="p">(</span>
+    <span class="nv">actionMap</span><span class="p">:</span> <span class="p">\</span><span class="o">.</span><span class="n">actionKeyPathToATuple</span><span class="p">,</span>
+    <span class="nv">state</span><span class="p">:</span> <span class="p">\</span><span class="o">.</span><span class="n">knownLocations</span>
+<span class="p">)</span>
+<span class="c1">// where:</span>
+<span class="c1">//   globalStateReducer: Reducer&lt;MyAction, MyGlobalState&gt;</span>
+<span class="c1">//                                                 ↑ lift</span>
+<span class="c1">//           gpsReducer: Reducer&lt;LocationAction, Location&gt;</span>
+</code></pre>
+
+<p>Different from simple <code>lift</code> to scalar, this one requires necessarily that you lift the action together with the state.
+That&rsquo;s because your action has to contain the ID or Index of the element we will modify. The <code>actionMap</code> KeyPath has to
+give us a tuple of either:</p>
+
+<ul>
+<li><code>(id, actionToSingleElement)</code></li>
+<li><code>(index, actionToSingleElement)</code></li>
+</ul>
+
+<p>The id or index is gonna be how we will search the array for the desired element, and only if we find it, we will run
+the <code>gpsReducer</code> for that specific element, using the action that has to do with single elements only.</p>
+
+<p>As <code>Location</code> doesn&rsquo;t have an <code>id</code> property we will have to either use index, implement <code>Identifiable</code> protocol or
+give another unique and <code>Hashable</code> property.</p>
+
+<p>Now this reducer can be used within our <code>Store</code> or even composed with others. It also can be used in other apps as
+long as we have a way to lift it to the world of <em>Whole</em>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">liftToCollection</span><span class="o">&lt;</span><span class="kt">GlobalAction</span><span class="p">,</span> <span class="kt">GlobalState</span><span class="p">,</span> <span class="kt">CollectionState</span><span class="p">:</span> <span class="kt">MutableCollection</span><span class="p">,</span> <span class="kt">ID</span><span class="p">:</span> <span class="kt">Hashable</span><span class="o">&gt;</span><span class="p">(</span>
+    <span class="n">action</span> <span class="nv">actionMap</span><span class="p">:</span> <span class="kt">KeyPath</span><span class="o">&lt;</span><span class="kt">GlobalAction</span><span class="p">,</span> <span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">ID</span><span class="p">,</span> <span class="nv">action</span><span class="p">:</span> <span class="kt">ActionType</span><span class="p">)?</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="nv">stateCollection</span><span class="p">:</span> <span class="kt">WritableKeyPath</span><span class="o">&lt;</span><span class="kt">GlobalState</span><span class="p">,</span> <span class="kt">CollectionState</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="nv">identifier</span><span class="p">:</span> <span class="kt">KeyPath</span><span class="o">&lt;</span><span class="kt">StateType</span><span class="p">,</span> <span class="kt">ID</span><span class="o">&gt;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Reducer</span><span class="o">&lt;</span><span class="kt">GlobalAction</span><span class="p">,</span> <span class="kt">GlobalState</span><span class="o">&gt;</span> <span class="k">where</span> <span class="kt">CollectionState</span><span class="o">.</span><span class="kt">Element</span> <span class="o">==</span> <span class="kt">StateType</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>actionMap</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>a read-only key-path from global action into a tuple: (id, local action), but it&rsquo;s optional because
+       maybe this reducer shouldn&rsquo;t care about certain actions.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>stateCollection</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>a writable key-path from global state that traverses into a local state, by extracting only
+             the part that it&rsquo;s relevant for this reducer. This part needs to be a <code>MutableCollection</code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>identifier</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>a key-path to define who is the unique-identifier of the Element (it has to be <code>Hashable</code>)</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>a <code>Reducer&lt;GlobalAction, GlobalState&gt;</code> that maps actions and states from the original local reducer, which
+       is specialised in a single Element, into a more generic and global reducer, to be used in a larger context.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ReducerAAV16liftToCollection6action05stateD0AByqd__qd_0_Gs7KeyPathCyqd__5IndexQyd_1_5index_xADtSgG_s08WritablegH0Cyqd_0_qd_1_Gt7ElementQyd_1_Rs_SMRd_1_r1_lF"></a>
+                    <a name="//apple_ref/swift/Method/liftToCollection(action:stateCollection:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ReducerAAV16liftToCollection6action05stateD0AByqd__qd_0_Gs7KeyPathCyqd__5IndexQyd_1_5index_xADtSgG_s08WritablegH0Cyqd_0_qd_1_Gt7ElementQyd_1_Rs_SMRd_1_r1_lF">liftToCollection(action:<wbr>stateCollection:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A type-lifting method for collections. The global state of your app is <em>Whole</em>, and the <code>Reducer</code> handles an element
+that is inside of a collection, which itself is sub-state of the global. Let&rsquo;s call this single element <em>Part</em>.</p>
+
+<p>Let&rsquo;s suppose you may want to have a <code>gpsReducer</code> that knows about the following <code>struct</code>:</p>
+<pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">Location</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">latitude</span><span class="p">:</span> <span class="kt">Double</span>
+    <span class="k">let</span> <span class="nv">longitude</span><span class="p">:</span> <span class="kt">Double</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>Let&rsquo;s call it <em>Part</em>. Both, this state and its reducer will be part of an external framework, used by dozens of
+apps. Internally probably the <code>Reducer</code> will receive some known <code>ActionType</code> and calculate a new location. On the
+main app we have a global state, that we now call <em>Whole</em>.</p>
+<pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">MyGlobalState</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">title</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>
+    <span class="k">let</span> <span class="nv">knownLocations</span><span class="p">:</span> <span class="p">[</span><span class="kt">Location</span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>As expected, <em>Part</em> (<code>Location</code>) is an element of the array <code>knownLocations</code>, which is property of <em>Whole</em>
+(<code>MyGlobalState</code>). This relationship could be less direct, for example there could be several levels of properties
+until you find the <em>Part</em> in the <em>Whole</em>, like <code>global.firstLevel.secondLevel.knownLocations</code>, but let&rsquo;s keep it a
+single-level for this example.</p>
+
+<p>To resolve this single element, we not only have to find the path to the array, but we have to find the element
+inside of the array. There are three methods for doing so:
+1) the element is <code>Identifiable</code> (iOS 13 or later)
+2) the element has a <code>Hashable</code> property that makes it unique, so we can find it in the array using this identifier
+3) using the index of the element in the array</p>
+
+<p>Because our <code>Store</code> understands <em>Whole</em> (<code>MyGlobalState</code>) and our <code>gpsReducer</code> understands <em>Part</em> (<code>Location</code>), we
+must <code>liftToCollection</code> the <code>Reducer</code> to the <em>Whole</em> level, by using:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">globalStateReducer</span> <span class="o">=</span> <span class="n">gpsReducer</span><span class="o">.</span><span class="nf">liftToCollection</span><span class="p">(</span>
+    <span class="nv">actionMap</span><span class="p">:</span> <span class="p">\</span><span class="o">.</span><span class="n">actionKeyPathToATuple</span><span class="p">,</span>
+    <span class="nv">state</span><span class="p">:</span> <span class="p">\</span><span class="o">.</span><span class="n">knownLocations</span>
+<span class="p">)</span>
+<span class="c1">// where:</span>
+<span class="c1">//   globalStateReducer: Reducer&lt;MyAction, MyGlobalState&gt;</span>
+<span class="c1">//                                                 ↑ lift</span>
+<span class="c1">//           gpsReducer: Reducer&lt;LocationAction, Location&gt;</span>
+</code></pre>
+
+<p>Different from simple <code>lift</code> to scalar, this one requires necessarily that you lift the action together with the state.
+That&rsquo;s because your action has to contain the ID or Index of the element we will modify. The <code>actionMap</code> KeyPath has to
+give us a tuple of either:</p>
+
+<ul>
+<li><code>(id, actionToSingleElement)</code></li>
+<li><code>(index, actionToSingleElement)</code></li>
+</ul>
+
+<p>The id or index is gonna be how we will search the array for the desired element, and only if we find it, we will run
+the <code>gpsReducer</code> for that specific element, using the action that has to do with single elements only.</p>
+
+<p>As <code>Location</code> doesn&rsquo;t have an <code>id</code> property we will have to either use index, implement <code>Identifiable</code> protocol or
+give another unique and <code>Hashable</code> property.</p>
+
+<p>Now this reducer can be used within our <code>Store</code> or even composed with others. It also can be used in other apps as
+long as we have a way to lift it to the world of <em>Whole</em>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">liftToCollection</span><span class="o">&lt;</span><span class="kt">GlobalAction</span><span class="p">,</span> <span class="kt">GlobalState</span><span class="p">,</span> <span class="kt">CollectionState</span><span class="p">:</span> <span class="kt">MutableCollection</span><span class="o">&gt;</span><span class="p">(</span>
+    <span class="n">action</span> <span class="nv">actionMap</span><span class="p">:</span> <span class="kt">KeyPath</span><span class="o">&lt;</span><span class="kt">GlobalAction</span><span class="p">,</span> <span class="p">(</span><span class="nv">index</span><span class="p">:</span> <span class="kt">CollectionState</span><span class="o">.</span><span class="kt">Index</span><span class="p">,</span> <span class="nv">action</span><span class="p">:</span> <span class="kt">ActionType</span><span class="p">)?</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="nv">stateCollection</span><span class="p">:</span> <span class="kt">WritableKeyPath</span><span class="o">&lt;</span><span class="kt">GlobalState</span><span class="p">,</span> <span class="kt">CollectionState</span><span class="o">&gt;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Reducer</span><span class="o">&lt;</span><span class="kt">GlobalAction</span><span class="p">,</span> <span class="kt">GlobalState</span><span class="o">&gt;</span> <span class="k">where</span> <span class="kt">CollectionState</span><span class="o">.</span><span class="kt">Element</span> <span class="o">==</span> <span class="kt">StateType</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>actionMap</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>a read-only key-path from global action into a tuple: (index, local action), but it&rsquo;s optional because
+       maybe this reducer shouldn&rsquo;t care about certain actions.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>stateCollection</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>a writable key-path from global state that traverses into a local state, by extracting only
+             the part that it&rsquo;s relevant for this reducer. This part needs to be a <code>MutableCollection</code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>a <code>Reducer&lt;GlobalAction, GlobalState&gt;</code> that maps actions and states from the original local reducer, which
+       is specialised in a single Element, into a more generic and global reducer, to be used in a larger context.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+            <div class="task-group">
+              <div class="task-name-container">
+                <a name="/Available%20where%20%60StateType%60%3A%20%60Identifiable%60"></a>
+                <a name="//apple_ref/swift/Section/Available where `StateType`: `Identifiable`" class="dashAnchor"></a>
+                <div class="section-name-container">
+                  <a class="section-name-link" href="#/Available%20where%20%60StateType%60%3A%20%60Identifiable%60"></a>
+                  <h3 class="section-name"><span>Available where <code>StateType</code>: <code>Identifiable</code></span>
+</h3>
+                </div>
+              </div>
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ReducerAAVAAs12IdentifiableR_rlE16liftToCollection6action05stateE0AByqd__qd_0_Gs7KeyPathCyqd__2IDQy_2id_xAEtSgG_s08WritablehI0Cyqd_0_qd_1_Gt7ElementQyd_1_Rs_SMRd_1_r1_lF"></a>
+                    <a name="//apple_ref/swift/Method/liftToCollection(action:stateCollection:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ReducerAAVAAs12IdentifiableR_rlE16liftToCollection6action05stateE0AByqd__qd_0_Gs7KeyPathCyqd__2IDQy_2id_xAEtSgG_s08WritablehI0Cyqd_0_qd_1_Gt7ElementQyd_1_Rs_SMRd_1_r1_lF">liftToCollection(action:<wbr>stateCollection:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>A type-lifting method for collections. The global state of your app is <em>Whole</em>, and the <code>Reducer</code> handles an element
+that is inside of a collection, which itself is sub-state of the global. Let&rsquo;s call this single element <em>Part</em>.</p>
+
+<p>Let&rsquo;s suppose you may want to have a <code>gpsReducer</code> that knows about the following <code>struct</code>:</p>
+<pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">Location</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">latitude</span><span class="p">:</span> <span class="kt">Double</span>
+    <span class="k">let</span> <span class="nv">longitude</span><span class="p">:</span> <span class="kt">Double</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>Let&rsquo;s call it <em>Part</em>. Both, this state and its reducer will be part of an external framework, used by dozens of
+apps. Internally probably the <code>Reducer</code> will receive some known <code>ActionType</code> and calculate a new location. On the
+main app we have a global state, that we now call <em>Whole</em>.</p>
+<pre class="highlight swift"><code><span class="kd">struct</span> <span class="kt">MyGlobalState</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">title</span><span class="p">:</span> <span class="kt">String</span><span class="p">?</span>
+    <span class="k">let</span> <span class="nv">knownLocations</span><span class="p">:</span> <span class="p">[</span><span class="kt">Location</span><span class="p">]</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>As expected, <em>Part</em> (<code>Location</code>) is an element of the array <code>knownLocations</code>, which is property of <em>Whole</em>
+(<code>MyGlobalState</code>). This relationship could be less direct, for example there could be several levels of properties
+until you find the <em>Part</em> in the <em>Whole</em>, like <code>global.firstLevel.secondLevel.knownLocations</code>, but let&rsquo;s keep it a
+single-level for this example.</p>
+
+<p>To resolve this single element, we not only have to find the path to the array, but we have to find the element
+inside of the array. There are three methods for doing so:
+1) the element is <code>Identifiable</code> (iOS 13 or later)
+2) the element has a <code>Hashable</code> property that makes it unique, so we can find it in the array using this identifier
+3) using the index of the element in the array</p>
+
+<p>Because our <code>Store</code> understands <em>Whole</em> (<code>MyGlobalState</code>) and our <code>gpsReducer</code> understands <em>Part</em> (<code>Location</code>), we
+must <code>liftToCollection</code> the <code>Reducer</code> to the <em>Whole</em> level, by using:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">globalStateReducer</span> <span class="o">=</span> <span class="n">gpsReducer</span><span class="o">.</span><span class="nf">liftToCollection</span><span class="p">(</span>
+    <span class="nv">actionMap</span><span class="p">:</span> <span class="p">\</span><span class="o">.</span><span class="n">actionKeyPathToATuple</span><span class="p">,</span>
+    <span class="nv">state</span><span class="p">:</span> <span class="p">\</span><span class="o">.</span><span class="n">knownLocations</span>
+<span class="p">)</span>
+<span class="c1">// where:</span>
+<span class="c1">//   globalStateReducer: Reducer&lt;MyAction, MyGlobalState&gt;</span>
+<span class="c1">//                                                 ↑ lift</span>
+<span class="c1">//           gpsReducer: Reducer&lt;LocationAction, Location&gt;</span>
+</code></pre>
+
+<p>Different from simple <code>lift</code> to scalar, this one requires necessarily that you lift the action together with the state.
+That&rsquo;s because your action has to contain the ID or Index of the element we will modify. The <code>actionMap</code> KeyPath has to
+give us a tuple of either:</p>
+
+<ul>
+<li><code>(id, actionToSingleElement)</code></li>
+<li><code>(index, actionToSingleElement)</code></li>
+</ul>
+
+<p>The id or index is gonna be how we will search the array for the desired element, and only if we find it, we will run
+the <code>gpsReducer</code> for that specific element, using the action that has to do with single elements only.</p>
+
+<p>As <code>Location</code> doesn&rsquo;t have an <code>id</code> property we will have to either use index, implement <code>Identifiable</code> protocol or
+give another unique and <code>Hashable</code> property.</p>
+
+<p>Now this reducer can be used within our <code>Store</code> or even composed with others. It also can be used in other apps as
+long as we have a way to lift it to the world of <em>Whole</em>.</p>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">func</span> <span class="n">liftToCollection</span><span class="o">&lt;</span><span class="kt">GlobalAction</span><span class="p">,</span> <span class="kt">GlobalState</span><span class="p">,</span> <span class="kt">CollectionState</span><span class="p">:</span> <span class="kt">MutableCollection</span><span class="o">&gt;</span><span class="p">(</span>
+    <span class="n">action</span> <span class="nv">actionMap</span><span class="p">:</span> <span class="kt">KeyPath</span><span class="o">&lt;</span><span class="kt">GlobalAction</span><span class="p">,</span> <span class="p">(</span><span class="nv">id</span><span class="p">:</span> <span class="kt">StateType</span><span class="o">.</span><span class="kt">ID</span><span class="p">,</span> <span class="nv">action</span><span class="p">:</span> <span class="kt">ActionType</span><span class="p">)?</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="nv">stateCollection</span><span class="p">:</span> <span class="kt">WritableKeyPath</span><span class="o">&lt;</span><span class="kt">GlobalState</span><span class="p">,</span> <span class="kt">CollectionState</span><span class="o">&gt;</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Reducer</span><span class="o">&lt;</span><span class="kt">GlobalAction</span><span class="p">,</span> <span class="kt">GlobalState</span><span class="o">&gt;</span> <span class="k">where</span> <span class="kt">CollectionState</span><span class="o">.</span><span class="kt">Element</span> <span class="o">==</span> <span class="kt">StateType</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>actionMap</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>a read-only key-path from global action into a tuple: (id, local action), but it&rsquo;s optional because
+       maybe this reducer shouldn&rsquo;t care about certain actions.</p>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>stateCollection</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>a writable key-path from global state that traverses into a local state, by extracting only
+             the part that it&rsquo;s relevant for this reducer. This part needs to be a <code>MutableCollection</code>.</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>a <code>Reducer&lt;GlobalAction, GlobalState&gt;</code> that maps actions and states from the original local reducer, which
+       is specialised in a single Element, into a more generic and global reducer, to be used in a larger context.</p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2022 <a class="link" href="https://github.com/SwiftRex/Reducer" target="_blank" rel="external noopener">Luiz Barbosa</a>. All rights reserved. (Last updated: 2022-11-19)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</html>

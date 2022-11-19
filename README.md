@@ -5,7 +5,7 @@
 
 ![Build Status](https://github.com/SwiftRex/SwiftRex/actions/workflows/swift.yml/badge.svg?branch=develop)
 [![codecov](https://codecov.io/gh/SwiftRex/Reducer/branch/master/graph/badge.svg?token=JqeB4QMx0T)](https://codecov.io/gh/SwiftRex/Reducer)
-[![Jazzy Documentation](https://swiftrex.github.io/SwiftRex/api/badge.svg)](https://swiftrex.github.io/SwiftRex/api/index.html)
+[![Jazzy Documentation](https://raw.githubusercontent.com/SwiftRex/Reducer/develop/docs/api/badge.svg)](https://swiftrex.github.io/SwiftRex/api/index.html)
 [![CocoaPods compatible](https://img.shields.io/cocoapods/v/SwiftRex.svg)](https://cocoapods.org/pods/SwiftRex)
 [![Swift Package Manager compatible](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-orange.svg)](https://swiftpackageindex.com/SwiftRex/Reducer)
 [![](https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FSwiftRex%2FReducer%2Fbadge%3Ftype%3Dswift-versions)](https://swiftpackageindex.com/SwiftRex/Reducer)

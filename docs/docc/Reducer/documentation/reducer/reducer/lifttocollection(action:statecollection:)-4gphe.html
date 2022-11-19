@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+    
+    <title>liftToCollection(action:stateCollection:)| Documentation</title>
+    
+    <link rel="icon"       href="../../../favicon.ico" />
+    <link rel="mask-icon"  href="../../../favicon.svg" color="#333333" />
+    <link rel='stylesheet' href='../../../css/site.css' />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.0.1/styles/default.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.0.1/highlight.min.js"></script>
+  </head>
+  <body>
+    <div id="app">
+      <div class="doc-topic">
+        <nav role="navigation" class="nav documentation-nav">
+  <div class="nav__wrapper">
+    <div class="nav__background"></div>
+    <div class="nav-content">
+      <div class="nav-title">
+        <span class="nav-title-link inactive">Documentation</span>
+      </div>
+      <div class="nav-menu">
+        <div class="nav-menu-tray">
+          <ul class="nav-menu-items hierarchy">
+            
+              <li class="nav-menu-item hierarchy-item">
+                
+                
+                  <a href="../index.html" class="item">Reducer</a>
+                
+              </li>
+            
+              <li class="nav-menu-item hierarchy-item">
+                
+                
+                  <a href="index.html" class="item">Reducer</a>
+                
+              </li>
+            
+              <li class="nav-menu-item hierarchy-item">
+                
+                  <span class="current item">liftToCollection(action:stateCollection:)</span>
+                
+                
+              </li>
+            
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+<main id="main" role="main" class="main">
+  <div class="topictitle">
+  <span class="eyebrow">Instance Method</span>
+  <h1 class="title">liftToCollection(action:stateCollection:)</h1>
+</div>
+  <div class="container content-grid">
+  <div class="description">
+    <div class="abstract content">
+      A type-lifting method for collections. The global state of your app is <em>Whole</em>, and the <code>Reducer</code> handles an element that is inside of a collection, which itself is sub-state of the global. Let’s call this single element <em>Part</em>.
+    </div>
+  </div>
+  
+  <!-- The sidebar once we have one: <div class="summary"></div> -->
+  
+  <div class="primary-content">
+    <section id='declaration' class='declaration'>
+  <h2>Declaration</h2>
+  <div class='declaration-group'>
+    <pre class='source indented'><code><span class='token-keyword'>func</span> <span class='token-identifier'>liftToCollection</span>&lt;<span class='token-genericParameter'>GlobalAction</span>, <span class='token-genericParameter'>GlobalState</span>, <span class='token-genericParameter'>CollectionState</span>&gt;(<span class='token-externalParam'>action</span> <span class='token-internalParam'>actionMap</span>: KeyPath&lt;GlobalAction, (index: CollectionState.Index, action: ActionType)?&gt;, <span class='token-externalParam'>stateCollection</span>: WritableKeyPath&lt;GlobalState, CollectionState&gt;) -&gt; <a class='type-identifier-link' href='../../../documentation/reducer/reducer/index.html'><span>Reducer</span></a>&lt;GlobalAction, GlobalState&gt; <span class='token-keyword'>where</span> StateType == CollectionState.Element, CollectionState : MutableCollection</code></pre>
+  </div>
+</section><div class='content'><h2 id='return-value'>Return Value</h2><p>a <code>Reducer&lt;GlobalAction, GlobalState&gt;</code> that maps actions and states from the original local reducer, which is specialised in a single Element, into a more generic and global reducer, to be used in a larger context.</p></div><section id="parameters" class="parameters">
+  <h2>Parameters</h2>
+  <dl>
+    
+      <dt class="param-name"><code>actionMap</code></dt>
+      <dd class="param-content">
+        <div class="content"><p>a read-only key-path from global action into a tuple: (index, local action), but it’s optional because maybe this reducer shouldn’t care about certain actions.</p></div>
+      </dd>
+    
+      <dt class="param-name"><code>stateCollection</code></dt>
+      <dd class="param-content">
+        <div class="content"><p>a writable key-path from global state that traverses into a local state, by extracting only the part that it’s relevant for this reducer. This part needs to be a <code>MutableCollection</code>.</p></div>
+      </dd>
+    
+  </dl>
+</section><div class='content'><h2 id='discussion'>Discussion</h2><p>Let’s suppose you may want to have a <code>gpsReducer</code> that knows about the following <code>struct</code>:</p><div data-syntax="" class="code-listing">
+  <div class="container-general">
+    <pre><code><span class="code-line-container"><span data-line-number="1" class="code-number" style="display: none;"></span><span class="code-line">struct Location {</span></span>
+<span class="code-line-container"><span data-line-number="2" class="code-number" style="display: none;"></span><span class="code-line">    let latitude: Double</span></span>
+<span class="code-line-container"><span data-line-number="3" class="code-number" style="display: none;"></span><span class="code-line">    let longitude: Double</span></span>
+<span class="code-line-container"><span data-line-number="4" class="code-number" style="display: none;"></span><span class="code-line">}</span></span>
+</code></pre>
+  </div>
+</div><p>Let’s call it <em>Part</em>. Both, this state and its reducer will be part of an external framework, used by dozens of apps. Internally probably the <code>Reducer</code> will receive some known <code>ActionType</code> and calculate a new location. On the main app we have a global state, that we now call <em>Whole</em>.</p><div data-syntax="" class="code-listing">
+  <div class="container-general">
+    <pre><code><span class="code-line-container"><span data-line-number="1" class="code-number" style="display: none;"></span><span class="code-line">struct MyGlobalState {</span></span>
+<span class="code-line-container"><span data-line-number="2" class="code-number" style="display: none;"></span><span class="code-line">    let title: String?</span></span>
+<span class="code-line-container"><span data-line-number="3" class="code-number" style="display: none;"></span><span class="code-line">    let knownLocations: [Location]</span></span>
+<span class="code-line-container"><span data-line-number="4" class="code-number" style="display: none;"></span><span class="code-line">}</span></span>
+</code></pre>
+  </div>
+</div><p>As expected, <em>Part</em> (<code>Location</code>) is an element of the array <code>knownLocations</code>, which is property of <em>Whole</em> (<code>MyGlobalState</code>). This relationship could be less direct, for example there could be several levels of properties until you find the <em>Part</em> in the <em>Whole</em>, like <code>global.firstLevel.secondLevel.knownLocations</code>, but let’s keep it a single-level for this example.</p><p>To resolve this single element, we not only have to find the path to the array, but we have to find the element inside of the array. There are three methods for doing so:</p><ol><li><p><p>the element is <code>Identifiable</code> (iOS 13 or later)</p></p></li><li><p><p>the element has a <code>Hashable</code> property that makes it unique, so we can find it in the array using this identifier</p></p></li><li><p><p>using the index of the element in the array</p></p></li></ol><p>Because our <code>Store</code> understands <em>Whole</em> (<code>MyGlobalState</code>) and our <code>gpsReducer</code> understands <em>Part</em> (<code>Location</code>), we must <code>liftToCollection</code> the <code>Reducer</code> to the <em>Whole</em> level, by using:</p><div data-syntax="" class="code-listing">
+  <div class="container-general">
+    <pre><code><span class="code-line-container"><span data-line-number="1" class="code-number" style="display: none;"></span><span class="code-line">let globalStateReducer = gpsReducer.liftToCollection(</span></span>
+<span class="code-line-container"><span data-line-number="2" class="code-number" style="display: none;"></span><span class="code-line">    actionMap: \.actionKeyPathToATuple,</span></span>
+<span class="code-line-container"><span data-line-number="3" class="code-number" style="display: none;"></span><span class="code-line">    state: \.knownLocations</span></span>
+<span class="code-line-container"><span data-line-number="4" class="code-number" style="display: none;"></span><span class="code-line">)</span></span>
+<span class="code-line-container"><span data-line-number="5" class="code-number" style="display: none;"></span><span class="code-line">// where:</span></span>
+<span class="code-line-container"><span data-line-number="6" class="code-number" style="display: none;"></span><span class="code-line">//   globalStateReducer: Reducer&lt;MyAction, MyGlobalState&gt;</span></span>
+<span class="code-line-container"><span data-line-number="7" class="code-number" style="display: none;"></span><span class="code-line">//                                                 ↑ lift</span></span>
+<span class="code-line-container"><span data-line-number="8" class="code-number" style="display: none;"></span><span class="code-line">//           gpsReducer: Reducer&lt;LocationAction, Location&gt;</span></span>
+</code></pre>
+  </div>
+</div><p>Different from simple <code>lift</code> to scalar, this one requires necessarily that you lift the action together with the state. That’s because your action has to contain the ID or Index of the element we will modify. The <code>actionMap</code> KeyPath has to give us a tuple of either:</p><ul><li><p><p><code>(id, actionToSingleElement)</code></p></p></li><li><p><p><code>(index, actionToSingleElement)</code></p></p></li></ul><p>The id or index is gonna be how we will search the array for the desired element, and only if we find it, we will run the <code>gpsReducer</code> for that specific element, using the action that has to do with single elements only.</p><p>As <code>Location</code> doesn’t have an <code>id</code> property we will have to either use index, implement <code>Identifiable</code> protocol or give another unique and <code>Hashable</code> property.</p><p>Now this reducer can be used within our <code>Store</code> or even composed with others. It also can be used in other apps as long as we have a way to lift it to the world of <em>Whole</em>.</p></div>
+  </div>
+</div>
+  
+  
+  
+</main>
+      </div>
+    </div>
+    <footer class="footer"></footer>
+    <script>hljs.highlightAll();</script>
+  </body>
+</html>

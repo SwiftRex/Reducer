@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Structures  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+    <script src="js/lunr.min.js" defer></script>
+    <script src="js/typeahead.jquery.js" defer></script>
+    <script src="js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+    <a name="//apple_ref/swift/Section/Structures" class="dashAnchor"></a>
+    <a title="Structures  Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="index.html">Reducer 0.9.0 Docs</a> (100% documented)</p>
+        <div class="header-right">
+          <form role="search" action="search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </div>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="index.html">Reducer Reference</a>
+        <img id="carat" src="img/carat.png" alt=""/>
+        Structures  Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Structs/Reducer.html">Reducer</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            <h1>Structures</h1>
+            <p>The following structures are available globally.</p>
+
+          </section>
+          <section class="section task-group-section">
+            <div class="task-group">
+              <ul>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ReducerAAV"></a>
+                    <a name="//apple_ref/swift/Struct/Reducer" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ReducerAAV">Reducer</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>An entity that calculates the new state when given current state and an incoming action <code>(Action, inout State) -&gt; Void</code>.</p>
+
+<p>An app triggers several actions over time, either coming from user input (button tap, scroll, pinch gesture), from sensors (CoreLocation, NFC,
+HealthKit), communication protocols (CoreBluetooth, networking, WebSocket), databases (CoreData, Realm), timers and many more.
+An app also starts with an initial state, right after its cold launch.
+For each action that arrives, the state can be modified, and this is exactly what a <code>Reducer</code> does: folds all actions that arrived since the app
+launch, plus the initial state, into the current state. One at the time.
+The shape of a <code>Reducer</code> could be represented as <code>(Action, State) -&gt; State</code>, or given the incoming action and the latest known state, calculate the
+new state.
+For the sake of performance, and keeping the same semantics, the SwiftRex <code>Reducer</code> is represented as <code>(Action, inout State) -&gt; Void</code>, avoiding
+unnecessary copies and allowing performance tuning for arrays or other big collections.
+A <code>Reducer</code> can focus in a small part, and be composed with other reducers. The order of this composition matters, because the state will be modified
+in the order as the reducers were composed, but you should avoid two reducers changing the same domain. If you can&rsquo;t avoid, mind the order.
+A <code>Reducer</code> can also focus in a subset of your full AppAction and AppState, and be &ldquo;lifted&rdquo; from the subset to the whole, for example it&rsquo;s focused on
+LoginAction and LoginState, then lifted to the whole AppAction and AppState by providing the KeyPath where the subset LoginAction is in the
+AppAction, and where the subset LoginState is in the AppState.</p>
+
+                        <a href="Structs/Reducer.html" class="slightly-smaller">See more</a>
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">struct</span> <span class="kt">Reducer</span><span class="o">&lt;</span><span class="kt">ActionType</span><span class="p">,</span> <span class="kt">StateType</span><span class="o">&gt;</span></code></pre>
+
+                        </div>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2022 <a class="link" href="https://github.com/SwiftRex/Reducer" target="_blank" rel="external noopener">Luiz Barbosa</a>. All rights reserved. (Last updated: 2022-11-19)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</html>

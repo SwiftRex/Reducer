@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Reducer  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+    <script src="js/lunr.min.js" defer></script>
+    <script src="js/typeahead.jquery.js" defer></script>
+    <script src="js/jazzy.search.js" defer></script>
+  </head>
+  <body>
+    <a title="Reducer  Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="index.html">Reducer 0.9.0 Docs</a> (100% documented)</p>
+        <div class="header-right">
+          <form role="search" action="search.json">
+            <input type="text" placeholder="Search documentation" data-typeahead>
+          </form>
+        </div>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="index.html">Reducer Reference</a>
+        <img id="carat" src="img/carat.png" alt=""/>
+        Reducer  Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="Structs.html">Structures</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Structs/Reducer.html">Reducer</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            
+            <p align="center">
+    <a href="https://github.com/SwiftRex/SwiftRex/"><img src="https://swiftrex.github.io/SwiftRex/markdown/img/SwiftRexBanner.png" alt="SwiftRex" /></a><br /><br />
+    Unidirectional Dataflow for your favourite reactive framework<br /><br />
+</p>
+
+<p><img src="https://github.com/SwiftRex/SwiftRex/actions/workflows/swift.yml/badge.svg?branch=develop" alt="Build Status">
+<a href="https://codecov.io/gh/SwiftRex/Reducer"><img src="https://codecov.io/gh/SwiftRex/Reducer/branch/master/graph/badge.svg?token=JqeB4QMx0T" alt="codecov"></a>
+<a href="https://swiftrex.github.io/SwiftRex/api/index.html"><img src="https://swiftrex.github.io/SwiftRex/api/badge.svg" alt="Jazzy Documentation"></a>
+<a href="https://cocoapods.org/pods/SwiftRex"><img src="https://img.shields.io/cocoapods/v/SwiftRex.svg" alt="CocoaPods compatible"></a>
+<a href="https://swiftpackageindex.com/SwiftRex/Reducer"><img src="https://img.shields.io/badge/Swift%20Package%20Manager-compatible-orange.svg" alt="Swift Package Manager compatible"></a>
+<a href="https://swiftpackageindex.com/SwiftRex/Reducer"><img src="https://img.shields.io/endpoint?url=https%3A%2F%2Fswiftpackageindex.com%2Fapi%2Fpackages%2FSwiftRex%2FReducer%2Fbadge%3Ftype%3Dswift-versions" alt=""></a>
+<a href="https://github.com/SwiftRex/Reducer"><img src="https://img.shields.io/badge/platform-iOS%20%7C%20watchOS%20%7C%20tvOS%20%7C%20macOS%20%7C%20Catalyst-252532.svg" alt="Platform support"></a>
+<a href="https://github.com/SwiftRex/Reducer/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-Apache%202.0-blue.svg" alt="License Apache 2.0"></a></p>
+
+<p>If you&rsquo;ve got questions, about SwiftRex or redux and Functional Programming in general, please <a href="https://join.slack.com/t/swiftrex/shared_invite/zt-oko9h1z4-Nq4YsK2FbMJ%7EgiN01sdDeQ">Join our Slack Channel</a>.</p>
+<h1 id='swiftrex' class='heading'>SwiftRex</h1>
+
+<p>This is part of <a href="https://github.com/SwiftRex/SwiftRex">&ldquo;SwiftRex library&rdquo;</a>. Please read the library documentation to have full context about what Reducer is used for.</p>
+
+<p>SwiftRex is a framework that combines Unidirectional Dataflow architecture and reactive programming (<a href="https://developer.apple.com/documentation/combine">Combine</a>, <a href="https://github.com/ReactiveX/RxSwift">RxSwift</a> or <a href="https://github.com/ReactiveCocoa/ReactiveSwift">ReactiveSwift</a>), providing a central state Store for the whole state of your app, of which your SwiftUI Views or UIViewControllers can observe and react to, as well as dispatching events coming from the user interactions.</p>
+
+<p>This pattern, also known as <a href="https://redux.js.org/basics/data-flow">&ldquo;Redux&rdquo;</a>, allows us to rethink our app as a single <a href="https://en.wikipedia.org/wiki/Pure_function">pure function</a> that receives user events as input and returns UI changes in response. The benefits of this workflow will hopefully become clear soon.</p>
+
+<p><a href="https://swiftrex.github.io/SwiftRex/api/index.html">API documentation can be found here</a>.</p>
+<h1 id='reducer' class='heading'>Reducer</h1>
+
+<p><code><a href="Structs/Reducer.html">Reducer</a></code> is a pure function wrapped in a monoid container, that takes an action and the current state to calculate the new state.</p>
+
+<p>The <code>MiddlewareProtocol</code> pipeline can do two things: dispatch outgoing actions and handling incoming actions. But what they can NOT do is changing the app state. Middlewares have read-only access to the up-to-date state of our apps, but when mutations are required we use the <code>MutableReduceFunction</code> function:</p>
+<pre class="highlight swift"><code><span class="p">(</span><span class="kt">ActionType</span><span class="p">,</span> <span class="k">inout</span> <span class="kt">StateType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span>
+</code></pre>
+
+<p>Which has the same semantics (but better performance) than old <code>ReduceFunction</code>:</p>
+<pre class="highlight swift"><code><span class="p">(</span><span class="kt">ActionType</span><span class="p">,</span> <span class="kt">StateType</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">StateType</span>
+</code></pre>
+
+<p>Given an action and the current state (as a mutable inout), it calculates the new state and changes it:</p>
+<pre class="highlight plaintext"><code>initial state is 42
+action: increment
+reducer: increment 42 =&gt; new state 43
+
+current state is 43
+action: decrement
+reducer: decrement 43 =&gt; new state 42
+
+current state is 42
+action: half
+reducer: half 42 =&gt; new state 21
+</code></pre>
+
+<p>The function is reducing all the actions in a cached state, and that happens incrementally for each new incoming action.</p>
+
+<p>It&rsquo;s important to understand that reducer is a synchronous operations that calculates a new state without any kind of side-effect (including non-obvious ones as creating <code>Date()</code>, using DispatchQueue or <code>Locale.current</code>), so never add properties to the <code><a href="Structs/Reducer.html">Reducer</a></code> structs or call any external function. If you are tempted to do that, please create a middleware and dispatch actions with Dates or Locales from it. </p>
+
+<p>Reducers are also responsible for keeping the consistency of a state, so it&rsquo;s always good to do a final sanity check before changing the state, like for example check other dependant properties that must be changed together.</p>
+
+<p>Once the reducer function executes, the store will update its single source-of-truth with the new calculated state, and propagate it to all its subscribers, that will react to the new state and update Views, for example.</p>
+
+<p>This function is wrapped in a struct to overcome some Swift limitations, for example, allowing us to compose multiple reducers into one (monoid operation, where two or more reducers become a single one) or lifting reducers from local types to global types.</p>
+
+<p>The ability to lift reducers allow us to write fine-grained &ldquo;sub-reducer&rdquo; that will handle only a subset of the state and/or action, place it in different frameworks and modules, and later plugged into a bigger state and action handler by providing a way to map state and actions between the global and local ones. For more information about that, please check <a href="#lifting">Lifting</a>.</p>
+
+<p>A possible implementation of a reducer would be:</p>
+<pre class="highlight swift"><code><span class="k">let</span> <span class="nv">volumeReducer</span> <span class="o">=</span> <span class="kt">Reducer</span><span class="o">&lt;</span><span class="kt">VolumeAction</span><span class="p">,</span> <span class="kt">VolumeState</span><span class="o">&gt;.</span><span class="n">reduce</span> <span class="p">{</span> <span class="n">action</span><span class="p">,</span> <span class="n">currentState</span> <span class="k">in</span>
+    <span class="k">switch</span> <span class="n">action</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="o">.</span><span class="nv">louder</span><span class="p">:</span>
+        <span class="n">currentState</span> <span class="o">=</span> <span class="kt">VolumeState</span><span class="p">(</span>
+            <span class="nv">isMute</span><span class="p">:</span> <span class="kc">false</span><span class="p">,</span> <span class="c1">// When increasing the volume, always unmute it.</span>
+            <span class="nv">volume</span><span class="p">:</span> <span class="nf">min</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="n">currentState</span><span class="o">.</span><span class="n">volume</span> <span class="o">+</span> <span class="mi">5</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="k">case</span> <span class="o">.</span><span class="nv">quieter</span><span class="p">:</span>
+        <span class="n">currentState</span> <span class="o">=</span> <span class="kt">VolumeState</span><span class="p">(</span>
+            <span class="nv">isMute</span><span class="p">:</span> <span class="n">currentState</span><span class="o">.</span><span class="n">isMute</span><span class="p">,</span>
+            <span class="nv">volume</span><span class="p">:</span> <span class="nf">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">currentState</span><span class="o">.</span><span class="n">volume</span> <span class="o">-</span> <span class="mi">5</span><span class="p">)</span>
+        <span class="p">)</span>
+    <span class="k">case</span> <span class="o">.</span><span class="nv">toggleMute</span><span class="p">:</span>
+        <span class="n">currentState</span> <span class="o">=</span> <span class="kt">VolumeState</span><span class="p">(</span>
+            <span class="nv">isMute</span><span class="p">:</span> <span class="o">!</span><span class="n">currentState</span><span class="o">.</span><span class="n">isMute</span><span class="p">,</span>
+            <span class="nv">volume</span><span class="p">:</span> <span class="n">currentState</span><span class="o">.</span><span class="n">volume</span>
+        <span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>Please notice from the example above the following good practices:</p>
+
+<ul>
+<li>No <code>DispatchQueue</code>, threading, operation queue, promises, reactive code in there.</li>
+<li>All you need to implement this function is provided by the arguments <code>action</code> and <code>currentState</code>, don&rsquo;t use any other variable coming from global scope, not even for reading purposes. If you need something else, it should either be in the state or come in the action payload.</li>
+<li>Do not start side-effects, requests, I/O, database calls.</li>
+<li>Avoid <code>default</code> when writing <code>switch</code>/<code>case</code> statements. That way the compiler will help you more.</li>
+<li>Make the action and the state generic parameters as much specialised as you can. If volume state is part of a bigger state, you should not be tempted to pass the whole big state into this reducer. Make it short, brief and specialised, this also helps preventing <code>default</code> case or having to re-assign properties that are never mutated by this reducer.</li>
+</ul>
+<pre class="highlight plaintext"><code>                                                                                                                    ┌────────┐                                     
+                                                       IO closure                                                ┌─▶│ View 1 │                                     
+                      ┌─────┐                          (don't run yet)                       ┌─────┐             │  └────────┘                                     
+                      │     │ handle  ┌──────────┐  ┌───────────────────────────────────────▶│     │ send        │  ┌────────┐                                     
+                      │     ├────────▶│Middleware│──┘                                        │     │────────────▶├─▶│ View 2 │                                     
+                      │     │ Action  │ Pipeline │──┐  ┌─────┐ reduce ┌──────────┐           │     │ New state   │  └────────┘                                     
+                      │     │         └──────────┘  └─▶│     │───────▶│ Reducer  │──────────▶│     │             │  ┌────────┐                                     
+    ┌──────┐ dispatch │     │                          │Store│ Action │ Pipeline │ New state │     │             └─▶│ View 3 │                                     
+    │Button│─────────▶│Store│                          │     │ +      └──────────┘           │Store│                └────────┘                                     
+    └──────┘ Action   │     │                          └─────┘ State                         │     │                                   dispatch    ┌─────┐         
+                      │     │                                                                │     │       ┌─────────────────────────┐ New Action  │     │         
+                      │     │                                                                │     │─run──▶│       IO closure        ├────────────▶│Store│─ ─ ▶ ...
+                      │     │                                                                │     │       │                         │             │     │         
+                      │     │                                                                │     │       └─┬───────────────────────┘             └─────┘         
+                      └─────┘                                                                └─────┘         │                     ▲                               
+                                                                                                      request│ side-effects        │side-effects                   
+                                                                                                             ▼                      response                       
+                                                                                                        ┌ ─ ─ ─ ─ ─                │                               
+                                                                                                          External │─ ─ async ─ ─ ─                                
+                                                                                                        │  World                                                   
+                                                                                                         ─ ─ ─ ─ ─ ┘                                               
+</code></pre>
+<h2 id='lifting' class='heading'>Lifting</h2>
+
+<ul>
+<li><a href="#lifting">Lifting</a>
+
+<ul>
+<li><a href="#lifting-reducer">Lifting Reducer</a>
+
+<ul>
+<li><a href="#lifting-reducer-using-closures">Lifting Reducer using closures:</a></li>
+<li><a href="#lifting-reducer-using-keypath">Lifting Reducer using KeyPath:</a></li>
+</ul></li>
+<li><a href="#optional-transformation">Optional transformation</a></li>
+<li><a href="#direction-of-the-arrows">Direction of the arrows</a></li>
+<li><a href="#use-of-keypaths">Use of KeyPaths</a></li>
+<li><a href="#functional-helpers">Functional Helpers</a></li>
+<li><a href="#xcode-snippets">Xcode Snippets:</a></li>
+</ul></li>
+</ul>
+<h3 id='lifting' class='heading'>Lifting</h3>
+
+<p>An app can be a complex product, performing several activities that not necessarily are related. For example, the same app may need to perform a request to a weather API, check the current user location using CLLocation and read preferences from UserDefaults.</p>
+
+<p>Although these activities are combined to create the full experience, they can be isolated from each other in order to avoid URLSession logic and CLLocation logic in the same place, competing for the same resources and potentially causing race conditions. Also, testing these parts in isolation is often easier and leads to more significant tests. </p>
+
+<p>Ideally we should organise our <code>AppState</code> and <code>AppAction</code> to account for these parts as isolated trees. In the example above, we could have 3 different properties in our AppState and 3 different enum cases in our AppAction to group state and actions related to the weather API, to the user location and to the UserDefaults access.</p>
+
+<p>This gets even more helpful in case we split our app in 3 types of <code><a href="Structs/Reducer.html">Reducer</a></code> and 3 types of <code>MiddlewareProtocol</code>, and each of them work not on the full <code>AppState</code> and <code>AppAction</code>, but in the 3 paths we grouped in our model. The first pair of <code><a href="Structs/Reducer.html">Reducer</a></code> and <code>MiddlewareProtocol</code> would be generic over <code>WeatherState</code> and <code>WeatherAction</code>, the second pair over <code>LocationState</code> and <code>LocationAction</code> and the third pair over <code>RepositoryState</code> and <code>RepositoryAction</code>. They could even be in different frameworks, so the compiler will forbid us from coupling Weather API code with CLLocation code, which is great as this enforces better practices and unlocks code reusability. Maybe our CLLocation middleware/reducer can be useful in a completely different app that checks for public transport routes.</p>
+
+<p>But at some point we want to put these 3 different types of entities together, and the <code>StoreType</code> of our app &ldquo;speaks&rdquo; <code>AppAction</code> and <code>AppState</code>, not the subsets used by the specialised handlers.</p>
+<pre class="highlight swift"><code><span class="kd">enum</span> <span class="kt">AppAction</span> <span class="p">{</span>
+    <span class="k">case</span> <span class="nf">weather</span><span class="p">(</span><span class="kt">WeatherAction</span><span class="p">)</span>
+    <span class="k">case</span> <span class="nf">location</span><span class="p">(</span><span class="kt">LocationAction</span><span class="p">)</span>
+    <span class="k">case</span> <span class="nf">repository</span><span class="p">(</span><span class="kt">RepositoryAction</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="kd">struct</span> <span class="kt">AppState</span> <span class="p">{</span>
+    <span class="k">let</span> <span class="nv">weather</span><span class="p">:</span> <span class="kt">WeatherState</span>
+    <span class="k">let</span> <span class="nv">location</span><span class="p">:</span> <span class="kt">LocationState</span>
+    <span class="k">let</span> <span class="nv">repository</span><span class="p">:</span> <span class="kt">RepositoryState</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>Given a reducer that is generic over <code>WeatherAction</code> and <code>WeatherState</code>, we can &ldquo;lift&rdquo; it to the global types <code>AppAction</code> and <code>AppState</code> by telling this reducer how to find in the global tree the properties that it needs. That would be <code>\AppAction.weather</code> and <code>\AppState.weather</code>. The same can be done for the middleware, and for the other 2 reducers and middlewares of our app.</p>
+
+<p>When all of them are lifted to a common type, they can be combined together using the diamond operator (<code>&lt;&gt;</code>) and set as the store handler.</p>
+
+<blockquote>
+<p><strong><em>IMPORTANT:</em></strong> Because enums in Swift don&rsquo;t have KeyPath as structs do, we strongly recommend reading <a href="docs/markdown/ActionEnumProperties.md">Action Enum Properties</a> document and implementing properties for each case, either manually or using code generators, so later you avoid writing lots and lots of error-prone switch/case. We also offer some templates to help you on that.</p>
+</blockquote>
+
+<p>Let&rsquo;s explore how to lift reducers and middlewares. </p>
+<h4 id='lifting-reducer' class='heading'>Lifting Reducer</h4>
+
+<p><code><a href="Structs/Reducer.html">Reducer</a></code> has AppAction INPUT, AppState INPUT and AppState OUTPUT, because it can only handle actions (never dispatch them), read the state and write the state.</p>
+
+<p>The lifting direction, therefore, should be:</p>
+<pre class="highlight plaintext"><code>Reducer:
+- ReducerAction? ← AppAction
+- ReducerState ←→ AppState
+</code></pre>
+
+<p>Given:</p>
+<pre class="highlight swift"><code><span class="c1">//      type 1         type 2</span>
+<span class="kt">Reducer</span><span class="o">&lt;</span><span class="kt">ReducerAction</span><span class="p">,</span> <span class="kt">ReducerState</span><span class="o">&gt;</span>
+</code></pre>
+
+<p>Transformations:</p>
+<pre class="highlight plaintext"><code>                                                                                 ╔═══════════════════╗
+                                                                                 ║                   ║
+                       ╔═══════════════╗                                         ║                   ║
+                       ║    Reducer    ║ .lift                                   ║       Store       ║
+                       ╚═══════════════╝                                         ║                   ║
+                               │                                                 ║                   ║
+                                                                                 ╚═══════════════════╝
+                               │                                                           │          
+
+                               │                                                           │          
+                                                                                     ┌───────────┐    
+                         ┌─────┴─────┐   (AppAction) -&gt; ReducerAction?               │           │    
+┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐    │  Reducer  │   { $0.case?.reducerAction }                  │           │    
+    Input Action         │  Action   │◀──────────────────────────────────────────────│ AppAction │    
+└ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘    │           │   KeyPath&lt;AppAction, ReducerAction?&gt;          │           │    
+                         └─────┬─────┘   \AppAction.case?.reducerAction              │           │    
+                                                                                     └───────────┘    
+                               │                                                           │          
+
+                               │         get: (AppState) -&gt; ReducerState                   │          
+                                         { $0.reducerState }                         ┌───────────┐    
+                         ┌─────┴─────┐   set: (inout AppState, ReducerState) -&gt; Void │           │    
+┌ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┐    │  Reducer  │   { $0.reducerState = $1 }                    │           │    
+        State            │   State   │◀─────────────────────────────────────────────▶│ AppState  │    
+└ ─ ─ ─ ─ ─ ─ ─ ─ ─ ┘    │           │   WritableKeyPath&lt;AppState, ReducerState&gt;     │           │    
+                         └─────┬─────┘   \AppState.reducerState                      │           │    
+                                                                                     └───────────┘    
+                               │                                                           │          
+</code></pre>
+<h5 id='lifting-reducer-using-closures' class='heading'>Lifting Reducer using closures:</h5>
+<pre class="highlight swift"><code><span class="o">.</span><span class="nf">lift</span><span class="p">(</span>
+    <span class="nv">actionGetter</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="nv">action</span><span class="p">:</span> <span class="kt">AppAction</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">ReducerAction</span><span class="p">?</span> <span class="cm">/* type 1 */</span> <span class="k">in</span> 
+        <span class="c1">// prism3 has associated value of ReducerAction,</span>
+        <span class="c1">// and whole thing is Optional because Prism is always optional</span>
+        <span class="n">action</span><span class="o">.</span><span class="n">prism1</span><span class="p">?</span><span class="o">.</span><span class="n">prism2</span><span class="p">?</span><span class="o">.</span><span class="n">prism3</span>
+    <span class="p">},</span>
+    <span class="nv">stateGetter</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="nv">state</span><span class="p">:</span> <span class="kt">AppState</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">ReducerState</span> <span class="cm">/* type 2 */</span> <span class="k">in</span> 
+        <span class="c1">// property2: ReducerState</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">property1</span><span class="o">.</span><span class="n">property2</span>
+    <span class="p">},</span>
+    <span class="nv">stateSetter</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="nv">state</span><span class="p">:</span> <span class="k">inout</span> <span class="kt">AppState</span><span class="p">,</span> <span class="nv">newValue</span><span class="p">:</span> <span class="kt">ReducerState</span> <span class="cm">/* type 2 */</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span> <span class="k">in</span> 
+        <span class="c1">// property2: ReducerState</span>
+        <span class="n">state</span><span class="o">.</span><span class="n">property1</span><span class="o">.</span><span class="n">property2</span> <span class="o">=</span> <span class="n">newValue</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+</code></pre>
+
+<p>Steps:</p>
+
+<ul>
+<li>Start plugging the 2 types from the Reducer into the 3 closure headers.</li>
+<li>For type 1, find a prism that resolves from AppAction into the matching type. <strong>BE SURE TO RUN SOURCERY AND HAVING ALL ENUM CASES COVERED BY PRISM</strong></li>
+<li>For type 2 on the stateGetter closure, find lenses (property getters) that resolve from AppState into the matching type.</li>
+<li>For type 2 on the stateSetter closure, find lenses (property setters) that can change the global state receive to the newValue received. Be sure that everything is writeable.</li>
+</ul>
+<h5 id='lifting-reducer-using-keypath' class='heading'>Lifting Reducer using KeyPath:</h5>
+<pre class="highlight swift"><code><span class="o">.</span><span class="nf">lift</span><span class="p">(</span>
+    <span class="nv">action</span><span class="p">:</span> <span class="p">\</span><span class="kt">AppAction</span><span class="o">.</span><span class="n">prism1</span><span class="p">?</span><span class="o">.</span><span class="n">prism2</span><span class="p">?</span><span class="o">.</span><span class="n">prism3</span><span class="p">,</span>
+    <span class="nv">state</span><span class="p">:</span> <span class="p">\</span><span class="kt">AppState</span><span class="o">.</span><span class="n">property1</span><span class="o">.</span><span class="n">property2</span>
+<span class="p">)</span>
+</code></pre>
+
+<p>Steps:</p>
+
+<ul>
+<li>Start with the closure example above</li>
+<li>For action, we can use KeyPath from <code>\AppAction</code> traversing the prism tree</li>
+<li>For state, we can use WritableKeyPath from <code>\AppState</code> traversing the properties as long as all of them are declared as <code>var</code>, not <code>let</code>.</li>
+</ul>
+<h4 id='functional-helpers' class='heading'>Functional Helpers</h4>
+
+<p>Identity:</p>
+
+<ul>
+<li>when some parts of your lift should be unchanged because they are already in the expected type</li>
+<li>lift that using <code>identity</code>, which is <code>{ $0 }</code></li>
+</ul>
+<h4 id='xcode-snippets' class='heading'>Xcode Snippets:</h4>
+<pre class="highlight swift"><code><span class="c1">// Reducer closure</span>
+<span class="o">.</span><span class="nf">lift</span><span class="p">(</span>
+    <span class="nv">actionGetter</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="nv">action</span><span class="p">:</span> <span class="kt">AppAction</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="o">&lt;</span><span class="err">#</span><span class="kt">LocalAction</span><span class="err">#</span><span class="o">&gt;</span><span class="p">?</span> <span class="k">in</span> <span class="n">action</span><span class="o">.&lt;</span><span class="err">#</span><span class="n">something</span><span class="p">?</span><span class="o">.</span><span class="n">child</span><span class="err">#</span><span class="o">&gt;</span> <span class="p">},</span>
+    <span class="nv">stateGetter</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="nv">state</span><span class="p">:</span> <span class="kt">AppState</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="o">&lt;</span><span class="err">#</span><span class="kt">LocalState</span><span class="err">#</span><span class="o">&gt;</span> <span class="k">in</span> <span class="n">state</span><span class="o">.&lt;</span><span class="err">#</span><span class="n">something</span><span class="o">.</span><span class="n">child</span><span class="err">#</span><span class="o">&gt;</span> <span class="p">},</span>
+    <span class="nv">stateSetter</span><span class="p">:</span> <span class="p">{</span> <span class="p">(</span><span class="nv">state</span><span class="p">:</span> <span class="k">inout</span> <span class="kt">AppState</span><span class="p">,</span> <span class="nv">newValue</span><span class="p">:</span> <span class="o">&lt;</span><span class="err">#</span><span class="kt">LocalState</span><span class="err">#</span><span class="o">&gt;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Void</span> <span class="k">in</span> <span class="n">state</span><span class="o">.&lt;</span><span class="err">#</span><span class="n">something</span><span class="o">.</span><span class="n">child</span><span class="err">#</span><span class="o">&gt;</span> <span class="o">=</span> <span class="n">newValue</span> <span class="p">}</span>
+<span class="p">)</span>
+
+<span class="c1">// Reducer KeyPath:</span>
+<span class="o">.</span><span class="nf">lift</span><span class="p">(</span>
+    <span class="nv">action</span><span class="p">:</span> <span class="p">\</span><span class="kt">AppAction</span><span class="o">.&lt;</span><span class="err">#</span><span class="n">something</span><span class="p">?</span><span class="o">.</span><span class="n">child</span><span class="err">#</span><span class="o">&gt;</span><span class="p">,</span>
+    <span class="nv">state</span><span class="p">:</span> <span class="p">\</span><span class="kt">AppState</span><span class="o">.&lt;</span><span class="err">#</span><span class="n">something</span><span class="o">.</span><span class="n">child</span><span class="err">#</span><span class="o">&gt;</span>
+<span class="p">)</span>
+</code></pre>
+<h1 id='installation' class='heading'>Installation</h1>
+
+<p>Please use SwiftRex installation instructions, instead. Reducers are not supposed to be used independently from SwiftRex.</p>
+
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2022 <a class="link" href="https://github.com/SwiftRex/Reducer" target="_blank" rel="external noopener">Luiz Barbosa</a>. All rights reserved. (Last updated: 2022-11-19)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external noopener">jazzy ♪♫ v0.14.3</a>, a <a class="link" href="https://realm.io" target="_blank" rel="external noopener">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</html>
