@@ -26,19 +26,28 @@ jobs:
         key: mint_deps
         path: ~/mint
     - uses: actions/checkout@v2
-    - name: Install Mac Dependencies
+    - name: Install Dependencies (Mac only)
       if: ${{ matrix.os == 'macos-latest' }}
       env:
         MINT_PATH: '~/mint'
       run: |
         brew install mint
         mint bootstrap
-    - name: SwiftLint
+    - name: SwiftLint (Mac only)
       if: ${{ matrix.os == 'macos-latest' }}
       env:
         MINT_PATH: '~/mint'
       run: make lint-check
-    - name: Run tests
+    - name: Run tests (Linux)
+      if: ${{ matrix.os == 'ubuntu-latest' }}
+      env:
+        LC_CTYPE: 'en_US.UTF-8'
+        LANG: 'en_US.UTF-8'
+        FRAMEWORK_NAME: 'Reducer'
+      run: |
+        make test
+    - name: Run tests (Mac)
+      if: ${{ matrix.os == 'macos-latest' }}
       env:
         LC_CTYPE: 'en_US.UTF-8'
         LANG: 'en_US.UTF-8'
