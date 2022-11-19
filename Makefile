@@ -23,8 +23,9 @@ mint:
 
 # Unit Test
 
+test: SHELL:=/bin/bash
 test:
-	set -o pipefail && \
+	set -eo pipefail && \
 	swift test --enable-code-coverage --build-path .build
 
 code-coverage-summary:
