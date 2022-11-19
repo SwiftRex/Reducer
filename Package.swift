@@ -5,12 +5,12 @@ let package = Package(
     name: "Reducer",
     platforms: [.macOS(.v10_13), .iOS(.v11), .tvOS(.v11), .watchOS(.v4)],
     products: [
-        .library(name: "Reducer", targets: ["Reducer"]),
+        .library(name: "Reducer", targets: ["Reducer"])
 //        .plugin(name: "Linter", targets: ["SwiftLintPlugin"])
     ],
     targets: [
         .target(name: "Reducer"), // dependencies: ["SwiftLintPlugin"]),
-        .testTarget(name: "ReducerTests", dependencies: ["Reducer"]),
+        .testTarget(name: "ReducerTests", dependencies: ["Reducer"])
 // Please keep it commented out. This should be uncommented only for when developing the library in Xcode
 //        .binaryTarget(
 //            name: "SwiftLintBinary",
