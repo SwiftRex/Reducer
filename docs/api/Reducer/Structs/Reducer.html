@@ -41,6 +41,9 @@
               <li class="nav-group-task">
                 <a href="../Structs/Reducer.html">Reducer</a>
               </li>
+              <li class="nav-group-task">
+                <a href="../Structs/ReducerBuilder.html">ReducerBuilder</a>
+              </li>
             </ul>
           </li>
         </ul>
@@ -222,6 +225,81 @@ and later C, it&rsquo;s exactly the same as if you compose A to a previously com
                       <div>
                         <h4>Return Value</h4>
                         <p>a composed reducer <code>(ActionType, inout StateType) -&gt; Void</code> equivalent to <code>g(f(x))</code></p>
+                      </div>
+                    </section>
+                  </div>
+                </li>
+                <li class="item">
+                  <div>
+                    <code>
+                    <a name="/s:7ReducerAAV7compose7contentAByxq_GAEyXE_tFZ"></a>
+                    <a name="//apple_ref/swift/Method/compose(content:)" class="dashAnchor"></a>
+                    <a class="token" href="#/s:7ReducerAAV7compose7contentAByxq_GAEyXE_tFZ">compose(content:<wbr>)</a>
+                    </code>
+                  </div>
+                  <div class="height-container">
+                    <div class="pointer-container"></div>
+                    <section class="section">
+                      <div class="pointer"></div>
+                      <div class="abstract">
+                        <p>Composes two or more reducers in series, to be evaluated from the top to the bottom for each incoming action.</p>
+
+<p>When composing reducer A with reducer B, when an action X arrives, first it will be forwarded to
+reducer A together with the initial state. This reducer may return a slightly (or completely) changed state from
+that operation, and this state will then be forwarded to reducer B together with the same action X. If you change
+the order, results may vary as you can imagine. Monoids don&rsquo;t necessarily hold the commutative axiom, although
+sometimes they do.</p>
+
+<p>For example you can compose reducers like this:</p>
+<pre class="highlight swift"><code><span class="kt">Reducer</span><span class="o">.</span><span class="n">compose</span> <span class="p">{</span>
+    <span class="kt">Reducer</span>
+       <span class="o">.</span><span class="n">login</span>
+       <span class="o">.</span><span class="nf">lift</span><span class="p">(</span><span class="nv">action</span><span class="p">:</span> <span class="p">\</span><span class="o">.</span><span class="n">loginAction</span><span class="p">,</span> <span class="nv">state</span><span class="p">:</span> <span class="p">\</span><span class="o">.</span><span class="n">loginState</span><span class="p">)</span>
+
+    <span class="kt">Reducer</span>
+       <span class="o">.</span><span class="n">lifecycle</span>
+       <span class="o">.</span><span class="nf">lift</span><span class="p">(</span><span class="nv">action</span><span class="p">:</span> <span class="p">\</span><span class="o">.</span><span class="n">lifecycleAction</span><span class="p">,</span> <span class="nv">state</span><span class="p">:</span> <span class="p">\</span><span class="o">.</span><span class="n">lifecycleState</span><span class="p">)</span>
+
+    <span class="kt">Reducer</span><span class="o">.</span><span class="n">app</span>
+
+    <span class="kt">Reducer</span><span class="o">.</span><span class="n">reduce</span> <span class="p">{</span> <span class="n">action</span><span class="p">,</span> <span class="n">state</span> <span class="k">in</span>
+        <span class="c1">// some inline reducer</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
+                      </div>
+                      <div class="declaration">
+                        <h4>Declaration</h4>
+                        <div class="language">
+                          <p class="aside-title">Swift</p>
+                          <pre class="highlight swift"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kd">func</span> <span class="nf">compose</span><span class="p">(</span><span class="kd"><a href="../Structs/ReducerBuilder.html">@ReducerBuilder</a></span> <span class="nv">content</span><span class="p">:</span> <span class="p">()</span> <span class="o">-&gt;</span> <span class="kt">Reducer</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kt">Reducer</span></code></pre>
+
+                        </div>
+                      </div>
+                      <div>
+                        <h4>Parameters</h4>
+                        <table class="graybox">
+                          <tbody>
+                            <tr>
+                              <td>
+                                <code>
+                                <em>content</em>
+                                </code>
+                              </td>
+                              <td>
+                                <div>
+                                  <p>a result builder (DSL) having zero or more reducers to be composed sequentially</p>
+                                </div>
+                              </td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      <div>
+                        <h4>Return Value</h4>
+                        <p>a composed reducer <code>(ActionType, inout StateType) -&gt; Void</code> equivalent to running all the internal
+       reducers in series</p>
                       </div>
                     </section>
                   </div>
