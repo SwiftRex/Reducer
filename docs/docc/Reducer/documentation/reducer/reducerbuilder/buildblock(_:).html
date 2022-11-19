@@ -72,13 +72,13 @@
     <section id='declaration' class='declaration'>
   <h2>Declaration</h2>
   <div class='declaration-group'>
-    <pre class='source indented'><code><span class='token-keyword'>static</span> <span class='token-keyword'>func</span> <span class='token-identifier'>buildBlock</span>&lt;<span class='token-genericParameter'>Action</span>, <span class='token-genericParameter'>State</span>&gt;(<span class='token-externalParam'>_</span> <span class='token-internalParam'>rs</span>: <a class='type-identifier-link' href='../../../documentation/reducer/reducer/index.html'><span>Reducer</span></a>&lt;Action, State&gt;...) -&gt; <a class='type-identifier-link' href='../../../documentation/reducer/reducer/index.html'><span>Reducer</span></a>&lt;Action, State&gt;</code></pre>
+    <pre class='source indented'><code><span class='token-keyword'>static</span> <span class='token-keyword'>func</span> <span class='token-identifier'>buildBlock</span>&lt;<span class='token-genericParameter'>Action</span>, <span class='token-genericParameter'>State</span>&gt;(<span class='token-externalParam'>_</span> <span class='token-internalParam'>reducers</span>: <a class='type-identifier-link' href='../../../documentation/reducer/reducer/index.html'><span>Reducer</span></a>&lt;Action, State&gt;...) -&gt; <a class='type-identifier-link' href='../../../documentation/reducer/reducer/index.html'><span>Reducer</span></a>&lt;Action, State&gt;</code></pre>
   </div>
 </section><div class='content'><h2 id='return-value'>Return Value</h2><p>the composed reducer that will run all the inner reducers sequentially/</p></div><section id="parameters" class="parameters">
   <h2>Parameters</h2>
   <dl>
     
-      <dt class="param-name"><code>rs</code></dt>
+      <dt class="param-name"><code>reducers</code></dt>
       <dd class="param-content">
         <div class="content"><p>the reducers to be combined/</p></div>
       </dd>

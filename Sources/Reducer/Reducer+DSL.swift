@@ -3,15 +3,15 @@ import Foundation
 /**
  DSL Builder for Reducer compose
  */
-@resultBuilder public struct ReducerBuilder {
+@resultBuilder public enum ReducerBuilder {
     /**
      DSL Builder for Reducer compose
-     - Parameter rs: the reducers to be combined/
+     - Parameter reducers: the reducers to be combined/
      - Returns: the composed reducer that will run all the inner reducers sequentially/
      */
-    public static func buildBlock<Action, State>(_ rs: Reducer<Action, State>...) -> Reducer<Action, State> {
+    public static func buildBlock<Action, State>(_ reducers: Reducer<Action, State>...) -> Reducer<Action, State> {
         .reduce { action, state in
-            rs.forEach { $0.reduce(action, &state) }
+            reducers.forEach { $0.reduce(action, &state) }
         }
     }
 }
@@ -30,12 +30,12 @@ extension Reducer {
      ```
      Reducer.compose {
          Reducer
-            .login
-            .lift(action: \.loginAction, state: \.loginState)
+             .login
+             .lift(action: \.loginAction, state: \.loginState)
 
          Reducer
-            .lifecycle
-            .lift(action: \.lifecycleAction, state: \.lifecycleState)
+             .lifecycle
+             .lift(action: \.lifecycleAction, state: \.lifecycleState)
 
          Reducer.app
 

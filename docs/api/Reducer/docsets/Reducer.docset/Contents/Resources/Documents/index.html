@@ -35,13 +35,18 @@
       <nav class="sidebar">
         <ul class="nav-groups">
           <li class="nav-group-name">
+            <a href="Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Enums/ReducerBuilder.html">ReducerBuilder</a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-group-name">
             <a href="Structs.html">Structures</a>
             <ul class="nav-group-tasks">
               <li class="nav-group-task">
                 <a href="Structs/Reducer.html">Reducer</a>
-              </li>
-              <li class="nav-group-task">
-                <a href="Structs/ReducerBuilder.html">ReducerBuilder</a>
               </li>
             </ul>
           </li>
@@ -210,7 +215,28 @@ reducer: half 42 =&gt; new state 21
 
 <p>Given a reducer that is generic over <code>WeatherAction</code> and <code>WeatherState</code>, we can &ldquo;lift&rdquo; it to the global types <code>AppAction</code> and <code>AppState</code> by telling this reducer how to find in the global tree the properties that it needs. That would be <code>\AppAction.weather</code> and <code>\AppState.weather</code>. The same can be done for the middleware, and for the other 2 reducers and middlewares of our app.</p>
 
-<p>When all of them are lifted to a common type, they can be combined together using the diamond operator (<code>&lt;&gt;</code>) and set as the store handler.</p>
+<p>When all of them are lifted to a common type, they can be combined together using <code>Reducer.compose(reducer1, reducer2, reducer3...)</code> function, or the DSL form:</p>
+<pre class="highlight swift"><code><span class="kt">Reducer</span><span class="o">.</span><span class="n">compose</span> <span class="p">{</span>
+    <span class="n">reducer1</span>
+
+    <span class="n">reducer2</span>
+
+    <span class="kt">Reducer</span>
+        <span class="o">.</span><span class="n">login</span>
+        <span class="o">.</span><span class="nf">lift</span><span class="p">(</span><span class="nv">action</span><span class="p">:</span> <span class="p">\</span><span class="o">.</span><span class="n">loginAction</span><span class="p">,</span> <span class="nv">state</span><span class="p">:</span> <span class="p">\</span><span class="o">.</span><span class="n">loginState</span><span class="p">)</span>
+
+    <span class="kt">Reducer</span>
+        <span class="o">.</span><span class="n">lifecycle</span>
+        <span class="o">.</span><span class="nf">lift</span><span class="p">(</span><span class="nv">action</span><span class="p">:</span> <span class="p">\</span><span class="o">.</span><span class="n">lifecycleAction</span><span class="p">,</span> <span class="nv">state</span><span class="p">:</span> <span class="p">\</span><span class="o">.</span><span class="n">lifecycleState</span><span class="p">)</span>
+
+    <span class="kt">Reducer</span><span class="o">.</span><span class="n">app</span>
+
+    <span class="kt">Reducer</span><span class="o">.</span><span class="n">reduce</span> <span class="p">{</span> <span class="n">action</span><span class="p">,</span> <span class="n">state</span> <span class="k">in</span>
+        <span class="c1">// some inline reducer</span>
+    <span class="p">}</span>
+
+<span class="p">}</span>
+</code></pre>
 
 <blockquote>
 <p><strong><em>IMPORTANT:</em></strong> Because enums in Swift don&rsquo;t have KeyPath as structs do, we strongly recommend reading <a href="docs/markdown/ActionEnumProperties.md">Action Enum Properties</a> document and implementing properties for each case, either manually or using code generators, so later you avoid writing lots and lots of error-prone switch/case. We also offer some templates to help you on that.</p>
