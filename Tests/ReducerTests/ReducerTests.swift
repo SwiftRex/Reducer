@@ -90,6 +90,31 @@ class ReducerTests: XCTestCase {
         XCTAssertEqual("0123", result.name)
     }
 
+    func testComposeThreeReducersDSLStyle() {
+        let reducer1: Reducer<AppAction, TestState> = .reduce { _, state in
+            state.name += "1"
+        }
+
+        let reducer2: Reducer<AppAction, TestState> = .reduce { _, state in
+            state.name += "2"
+        }
+
+        let reducer3: Reducer<AppAction, TestState> = .reduce { _, state in
+            state.name += "3"
+        }
+
+        let sut = Reducer.compose {
+            reducer1
+            reducer2
+            reducer3
+        }
+
+        var result = TestState(value: UUID(), name: "0")
+        sut.reduce(.foo, &result)
+
+        XCTAssertEqual("0123", result.name)
+    }
+
     func testComposeTwoGroupsOfReducers() {
         let reducer1: Reducer<AppAction, TestState> = .reduce { _, state in
             state.name += "1"
