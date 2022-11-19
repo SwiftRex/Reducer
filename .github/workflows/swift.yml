@@ -34,6 +34,7 @@ jobs:
         brew install mint
         mint bootstrap
     - name: SwiftLint
+      if: ${{ matrix.os == 'macos-latest' }}
       env:
         MINT_PATH: '~/mint'
       run: make lint-check
