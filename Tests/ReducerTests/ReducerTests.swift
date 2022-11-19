@@ -2,7 +2,7 @@ import Foundation
 @testable import Reducer
 import XCTest
 
-// swiftlint:disable:next
+// swiftlint:disable:next type_body_length
 class ReducerTests: XCTestCase {
     func testAnyReducer() {
         // Given
