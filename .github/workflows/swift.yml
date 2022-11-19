@@ -21,11 +21,13 @@ jobs:
     - name: Get swift version
       run: swift --version
     - name: Cache Mint
+      if: ${{ matrix.os == 'macos-latest' }}
       id: cache-mint
       uses: actions/cache@v3
       with:
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('Mintfile') }}
         path: ~/mint
+        key: ${{ runner.os }}-mint-${{ hashFiles('**/Mintfile') }}
+        restore-keys: ${{ runner.os }}-mint-
     - uses: actions/checkout@v2
     - name: Install Dependencies (Mac only)
       if: ${{ matrix.os == 'macos-latest' && steps.cache-npm.outputs.cache-hit != 'true' }}

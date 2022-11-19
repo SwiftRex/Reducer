@@ -4,7 +4,7 @@
 </p>
 
 ![Build Status](https://github.com/SwiftRex/SwiftRex/actions/workflows/swift.yml/badge.svg?branch=develop)
-[![codecov](https://codecov.io/gh/SwiftRex/Reducer/branch/develop/graph/badge.svg)](https://codecov.io/gh/SwiftRex/Reducer)
+[![codecov](https://codecov.io/gh/SwiftRex/Reducer/branch/master/graph/badge.svg?token=JqeB4QMx0T)](https://codecov.io/gh/SwiftRex/Reducer)
 [![Jazzy Documentation](https://swiftrex.github.io/SwiftRex/api/badge.svg)](https://swiftrex.github.io/SwiftRex/api/index.html)
 [![CocoaPods compatible](https://img.shields.io/cocoapods/v/SwiftRex.svg)](https://cocoapods.org/pods/SwiftRex)
 [![Swift Package Manager compatible](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-orange.svg)](https://swiftpackageindex.com/SwiftRex/Reducer)
