@@ -1,13 +1,11 @@
 name: Swift
 
 on:
-  pull_request:
-      - master
-      - develop
   push:
-    branches:
-      - master
-      - develop
+    branches: [ develop, master ]
+  pull_request:
+    branches: [ develop, master ]
+
 jobs:
   build:
     name: Swift on ${{ matrix.os }}
