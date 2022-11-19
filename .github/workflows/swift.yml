@@ -26,7 +26,8 @@ jobs:
         key: mint_deps
         path: ~/mint
     - uses: actions/checkout@v2
-    - name: Install Dependencies
+    - name: Install Mac Dependencies
+      if: ${{ matrix.os == 'macos-latest' }}
       env:
         MINT_PATH: '~/mint'
       run: |
