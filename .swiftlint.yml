@@ -92,12 +92,13 @@ opt_in_rules: # some rules are only opt-in
   # - type_contents_order
   - unavailable_function
   - unneeded_parentheses_in_closure_argument
-  - unused_import
   - vertical_parameter_alignment_on_call
   - vertical_whitespace_closing_braces
   - vertical_whitespace_opening_braces
   - xct_specific_matcher
   - yoda_condition
+analyzer_rules:
+  - unused_import
 custom_rules:
   double_space: # from https://github.com/IBM-Swift/Package-Builder
     include: "*.swift"

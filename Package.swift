@@ -1,27 +1,32 @@
-// swift-tools-version: 5.7
+// swift-tools-version: 5.9
 import PackageDescription
+
+let devModeInXcode = false
 
 let package = Package(
     name: "Reducer",
-    platforms: [.macOS(.v10_13), .iOS(.v11), .tvOS(.v11), .watchOS(.v4)],
+    platforms: [.macOS(.v10_13), .iOS(.v12), .tvOS(.v12), .watchOS(.v4)],
     products: [
         .library(name: "Reducer", targets: ["Reducer"])
-//        .plugin(name: "Linter", targets: ["SwiftLintPlugin"])
-    ],
+    ].compactMap { $0 },
     targets: [
-        .target(name: "Reducer"), // dependencies: ["SwiftLintPlugin"]),
+        .target(
+            name: "Reducer",
+            dependencies: [],
+            plugins: devModeInXcode ? ["SwiftLintXcode"] : []
+        ),
         .testTarget(name: "ReducerTests", dependencies: ["Reducer"])
-// Please keep it commented out. This should be uncommented only for when developing the library in Xcode
-//        .binaryTarget(
-//            name: "SwiftLintBinary",
-//            url: "https://github.com/realm/SwiftLint/releases/download/0.50.0/SwiftLintBinary-macos.artifactbundle.zip",
-//            checksum: "fb93e474e5827940985093c9cd437f1a70e511b16d790fe0e4150ab25edefa3b"
-//        ),
-//        .plugin(
-//            name: "SwiftLintPlugin",
-//            capability: .buildTool(),
-//            dependencies: ["SwiftLintBinary"]
-//        )
-    ],
+    ] + (devModeInXcode ? [
+        .binaryTarget(
+            name: "SwiftLintBinary",
+            url: "https://github.com/realm/SwiftLint/releases/download/0.54.0/SwiftLintBinary-macos.artifactbundle.zip",
+            checksum: "963121d6babf2bf5fd66a21ac9297e86d855cbc9d28322790646b88dceca00f1"
+        ),
+        .plugin(
+            name: "SwiftLintXcode",
+            capability: .buildTool(),
+            dependencies: ["SwiftLintBinary"]
+        )
+    ] : []),
     swiftLanguageVersions: [.v5]
 )
